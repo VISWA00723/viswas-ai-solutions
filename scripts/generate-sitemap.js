@@ -1,6 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const { SitemapStream, streamToPromise } = require('sitemap');
+import { writeFile } from 'fs/promises';
+import { resolve } from 'path';
+import { SitemapStream } from 'sitemap';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Define your website's base URL
 const SITE_URL = 'https://viswap.netlify.app';
@@ -11,7 +16,7 @@ const pages = [
     url: '/', 
     changefreq: 'daily', 
     priority: 1.0,
-    lastmod: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+    lastmod: new Date().toISOString().split('T')[0]
   },
   { 
     url: '/#about', 
@@ -61,29 +66,33 @@ const generateSitemap = async () => {
       lastmodDateOnly: true,
     });
 
-    // Create a write stream
-    const writeStream = fs.createWriteStream(
-      path.resolve('./public/sitemap.xml')
-    );
+    // Create a readable stream from your pages
+    const links = pages.map(page => ({
+      url: page.url,
+      changefreq: page.changefreq,
+      priority: page.priority,
+      lastmod: page.lastmod,
+    }));
 
-    // Pipe the sitemap to the write stream
-    sitemap.pipe(writeStream);
-
-    // Add all pages to sitemap
-    pages.forEach(page => {
-      sitemap.write({
-        url: page.url,
-        changefreq: page.changefreq,
-        priority: page.priority,
-        lastmod: page.lastmod,
-      });
-    });
-
-    // End the stream
+    // Generate the sitemap XML
+    let sitemapXml = '';
+    for (const link of links) {
+      sitemap.write(link);
+    }
     sitemap.end();
 
-    // Wait for the sitemap to finish writing
-    await streamToPromise(sitemap);
+    // Collect all data from the stream
+    for await (const chunk of sitemap) {
+      sitemapXml += chunk.toString('utf-8');
+    }
+    
+    // Ensure the public directory exists
+    const publicDir = resolve(__dirname, '../public');
+    await writeFile(
+      resolve(publicDir, 'sitemap.xml'),
+      sitemapXml,
+      'utf-8'
+    );
     
     console.log('Sitemap generated successfully!');
   } catch (error) {
