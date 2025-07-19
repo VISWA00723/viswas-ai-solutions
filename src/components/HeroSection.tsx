@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Scene3D } from './Scene3D';
 import { ParticleSystem } from './ParticleSystem';
-import { Mail, Phone, MapPin, Github, Linkedin, Download, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Download } from 'lucide-react';
 import { useRef } from 'react';
 
 export function HeroSection() {
@@ -39,50 +39,6 @@ export function HeroSection() {
       {/* Particle System */}
       <ParticleSystem />
       
-      {/* Dynamic Background Effects */}
-      <div className="absolute inset-0">
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 180, 270, 360],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{ 
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-        ></motion.div>
-        <motion.div 
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 270, 180, 90, 0],
-            opacity: [0.4, 0.7, 0.4]
-          }}
-          transition={{ 
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-            delay: -5
-          }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl"
-        ></motion.div>
-        <motion.div 
-          animate={{ 
-            x: [0, 100, -100, 0],
-            y: [0, -50, 50, 0],
-            scale: [1, 1.1, 0.9, 1]
-          }}
-          transition={{ 
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary-glow/15 rounded-full blur-2xl"
-        ></motion.div>
-      </div>
-
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
           {/* Left Content */}
@@ -93,15 +49,6 @@ export function HeroSection() {
             className="space-y-8"
           >
             <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="flex items-center gap-2"
-              >
-                <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-                <span className="text-primary font-semibold text-lg">Hello, I'm</span>
-              </motion.div>
               
               <motion.h1
                 initial={{ opacity: 0, y: 50 }}
@@ -232,44 +179,6 @@ export function HeroSection() {
             className="relative h-[600px] lg:h-[700px]"
           >
             <Scene3D className="w-full h-full" />
-            
-            {/* Enhanced Floating Elements */}
-            <div className="absolute inset-0 pointer-events-none">
-              <motion.div
-                animate={{ 
-                  y: [0, -30, 0],
-                  rotate: [0, 180, 360],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-20 right-20 w-16 h-16 bg-gradient-primary rounded-lg shadow-glow"
-              ></motion.div>
-              <motion.div
-                animate={{ 
-                  y: [0, 40, 0],
-                  x: [0, 20, 0],
-                  rotate: [0, -180, -360]
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                className="absolute bottom-32 left-10 w-12 h-12 bg-accent rounded-full shadow-accent"
-              ></motion.div>
-              <motion.div
-                animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.5, 1]
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/3 left-20 w-8 h-8 border-2 border-primary rounded-sm"
-              ></motion.div>
-              <motion.div
-                animate={{ 
-                  y: [0, -20, 0],
-                  opacity: [0.5, 1, 0.5]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-1/2 right-10 w-6 h-6 bg-primary-glow rounded-full"
-              ></motion.div>
-            </div>
           </motion.div>
         </div>
       </div>
