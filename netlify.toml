@@ -8,6 +8,13 @@
   NPM_FLAGS = "--legacy-peer-deps"
   CI = "false"
 
+# Handle Google verification file
+[[redirects]]
+  from = "/google80924ce1f1810e82.html"
+  to = "/google80924ce1f1810e82.html"
+  status = 200
+  force = true
+
 # Handle sitemap.xml through Netlify function
 [[redirects]]
   from = "/sitemap.xml"
