@@ -1,0 +1,39 @@
+{
+  "name": "Viswa Portfolio - AI/ML Developer & Full Stack Engineer",
+  "short_name": "Viswa Portfolio",
+  "description": "Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["technology", "portfolio", "developer", "ai", "ml"],
+  "keywords": "Viswa, Viswa V R, AI Developer, ML Engineer, Full Stack Developer, Machine Learning, Deep Learning, React Developer, Node.js, Python, Data Science, Portfolio",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

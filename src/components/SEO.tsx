@@ -3,46 +3,24 @@ import { Helmet } from 'react-helmet-async';
 interface SEOProps {
   title?: string;
   description?: string;
-  keywords?: string[];
-  ogImage?: string;
+  keywords?: string;
+  image?: string;
   url?: string;
-  type?: 'website' | 'article' | 'profile';
+  type?: string;
   author?: string;
-  publishedTime?: string;
-  modifiedTime?: string;
-  section?: string;
-  tags?: string[];
+  canonical?: string;
 }
 
-export const SEO = ({
-  title = 'Viswa - Full Stack Developer & Designer',
-  description = 'Professional portfolio of Viswa, showcasing skills, projects, and experience in full-stack development and design.',
-  keywords = [
-    'Viswa',
-    'Viswa Dev',
-    'Viswa P',
-    'Full Stack Developer',
-    'Web Developer',
-    'React Developer',
-    'JavaScript Developer',
-    'TypeScript Developer',
-    'Portfolio',
-    'Web Design',
-    'UI/UX Designer',
-    'MERN Stack Developer',
-    'Frontend Developer',
-    'Backend Developer',
-    'Node.js Developer'
-  ],
-  ogImage = 'https://viswap.netlify.app/og-image.jpg',
+export const SEO: React.FC<SEOProps> = ({
+  title = 'Viswa - AI/ML Developer & Full Stack Engineer | Viswa Portfolio',
+  description = 'Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Discover Viswa\'s innovative projects and professional expertise.',
+  keywords = 'Viswa, Viswa V R, Viswa Developer, Viswa AI, Viswa ML, Viswa Portfolio, Viswa Projects, AI Developer Viswa, ML Engineer Viswa, Full Stack Developer Viswa, Machine Learning Expert Viswa, Deep Learning Specialist Viswa, React Developer Viswa, Node.js Expert Viswa, Python Developer Viswa, Data Scientist Viswa, Software Engineer Viswa, Web Developer Viswa, Tech Expert Viswa, Viswa Tech, Viswa Solutions, Viswa AI Solutions',
+  image = 'https://viswap.netlify.app/og-image.jpg',
   url = 'https://viswap.netlify.app',
   type = 'website',
-  author = 'Viswa',
-  publishedTime,
-  modifiedTime,
-  section = 'Technology',
-  tags = ['web development', 'programming', 'design']
-}: SEOProps) => {
+  author = 'Viswa V R',
+  canonical = 'https://viswap.netlify.app'
+}) => {
   const siteName = 'Viswa - Portfolio';
   const twitterHandle = '@viswa_dev';
   
@@ -50,7 +28,7 @@ export const SEO = ({
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content={keywords.join(', ')} />
+      <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow" />
@@ -60,7 +38,7 @@ export const SEO = ({
       <meta property="og:url" content={url} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={image} />
       <meta property="og:site_name" content={siteName} />
       
       {/* Twitter */}
@@ -69,7 +47,7 @@ export const SEO = ({
       <meta name="twitter:creator" content={twitterHandle} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={image} />
       
       {/* Canonical URL */}
       <link rel="canonical" href={url} />

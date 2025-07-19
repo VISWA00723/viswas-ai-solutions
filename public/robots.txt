@@ -1,34 +1,37 @@
-# Allow all search engines to crawl the website
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /private/
-Disallow: /admin/
-
-# Sitemap location
-Sitemap: https://viswap.netlify.app/sitemap.xml
+# Robots.txt for Viswa's Portfolio Website - AI/ML Developer & Full Stack Engineer
+# https://viswap.netlify.app
+# Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist
 
 # Allow all search engines to crawl the website
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /images/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.webp
+Allow: /*.svg
 
-# Crawl-delay: 10  # Uncomment if needed to limit crawl rate
-
-# Allow specific bots with their specific rules
+# Specific instructions for major search engines
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 5
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 5
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
 
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
-Allow: /
 
-User-agent: *
-Allow: /
+# Sitemap locations
+Sitemap: https://viswap.netlify.app/sitemap.xml

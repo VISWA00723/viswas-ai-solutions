@@ -1,39 +1,71 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Viswa",
+  "name": "Viswa V R",
+  "alternateName": ["Viswa", "Viswa Dev", "Viswa Developer", "Viswa AI", "Viswa ML", "Viswa Tech"],
+  "description": "Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Viswa specializes in creating innovative AI solutions and modern web applications.",
   "url": "https://viswap.netlify.app",
+  "image": "https://viswap.netlify.app/profile-image.jpg",
   "sameAs": [
-    "https://github.com/viswa",
-    "https://linkedin.com/in/viswa",
-    "https://twitter.com/viswa_dev"
+    "https://github.com/VISWA00723",
+    "https://www.linkedin.com/in/viswa-v-r-41871324a/"
   ],
-  "jobTitle": "Full Stack Developer",
+  "jobTitle": "AI/ML Developer & Full Stack Engineer",
   "worksFor": {
     "@type": "Organization",
-    "name": "Viswa Dev"
+    "name": "Viswa AI Solutions",
+    "description": "Innovative AI and web development solutions by Viswa"
   },
-  "description": "Professional portfolio of Viswa, a Full Stack Developer specializing in modern web technologies.",
-  "alumniOf": [
-    {
-      "@type": "EducationalOrganization",
-      "name": "Your University/College",
-      "sameAs": "https://example.com/your-university"
-    }
-  ],
   "knowsAbout": [
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Deep Learning",
+    "Full Stack Development",
+    "React.js Development",
+    "Node.js Development",
+    "Python Programming",
+    "Data Science",
     "Web Development",
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Node.js",
+    "Software Engineering",
+    "AI Solutions",
+    "ML Engineering",
+    "Modern Web Technologies",
+    "Database Design",
+    "API Development",
+    "Cloud Computing",
+    "DevOps",
     "UI/UX Design"
   ],
-  "hasCredential": [
-    {
-      "@type": "EducationalOccupationalCredential",
-      "name": "Your Degree/Certification",
-      "credentialCategory": "Degree"
-    }
-  ]
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "AI/ML Developer and Full Stack Engineer",
+    "occupationLocation": {
+      "@type": "Country",
+      "name": "India"
+    },
+    "skills": "AI/ML Development, Full Stack Engineering, Data Science, Python, React, Node.js, Machine Learning, Deep Learning",
+    "description": "Viswa specializes in developing cutting-edge AI/ML solutions and modern web applications"
+  },
+  "alumniOf": {
+    "@type": "EducationalOrganization",
+    "name": "Computer Science Graduate"
+  },
+  "award": "Recognition for innovative AI/ML projects and web development excellence",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "professional",
+    "url": "https://viswap.netlify.app/#contact",
+    "description": "Contact Viswa for AI/ML development and full stack engineering projects"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://viswap.netlify.app",
+    "name": "Viswa Portfolio - AI/ML Developer & Full Stack Engineer",
+    "description": "Official portfolio of Viswa V R showcasing AI/ML projects, full stack development work, and professional expertise"
+  },
+  "potentialAction": {
+    "@type": "ViewAction",
+    "target": "https://viswap.netlify.app",
+    "name": "View Viswa's Portfolio"
+  }
 }
