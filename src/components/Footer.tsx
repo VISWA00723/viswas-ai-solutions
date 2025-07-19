@@ -10,16 +10,37 @@ export function Footer() {
           viewport={{ once: true }}
           className="text-center space-y-6"
         >
-          <div className="text-muted-foreground text-sm">
-            Built with{' '}
-            <a
-              href="https://viswa.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-primary"
-            >
-              viswa.dev
-            </a>
+          <div className="text-muted-foreground text-sm flex flex-col items-center gap-2">
+            <span>
+              Built with{' '}
+              <a
+                href="https://viswa.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary"
+              >
+                viswa.dev
+              </a>
+            </span>
+            <span>
+              <a
+                href="https://www.linkedin.com/in/viswa-v-r-41871324a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary"
+              >
+                LinkedIn
+              </a>
+              {' | '}
+              <a
+                href="https://github.com/viswavr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary"
+              >
+                GitHub
+              </a>
+            </span>
           </div>
         </motion.div>
       </div>

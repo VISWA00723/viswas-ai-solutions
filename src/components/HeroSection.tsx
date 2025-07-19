@@ -162,12 +162,16 @@ export function HeroSection() {
               transition={{ delay: 1.7, duration: 0.8 }}
               className="flex space-x-4"
             >
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary magnetic-hover transition-all duration-300 hover:shadow-glow">
-                <Github className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary magnetic-hover transition-all duration-300 hover:shadow-glow">
-                <Linkedin className="w-5 h-5" />
-              </Button>
+              <a href="https://github.com/viswavr" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary magnetic-hover transition-all duration-300 hover:shadow-glow">
+                  <Github className="w-5 h-5" />
+                </Button>
+              </a>
+              <a href="https://www.linkedin.com/in/viswa-v-r-41871324a/" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary magnetic-hover transition-all duration-300 hover:shadow-glow">
+                  <Linkedin className="w-5 h-5" />
+                </Button>
+              </a>
             </motion.div>
           </motion.div>
 

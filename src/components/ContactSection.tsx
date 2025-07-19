@@ -42,7 +42,7 @@ const socialLinks = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: '#',
+    href: 'https://www.linkedin.com/in/viswa-v-r-41871324a',
     color: 'text-blue-400 hover:text-blue-300'
   },
   {
