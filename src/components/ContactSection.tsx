@@ -36,7 +36,7 @@ const socialLinks = [
   {
     icon: Github,
     label: 'GitHub',
-    href: '#',
+    href: 'https://github.com/VISWA00723',
     color: 'text-gray-400 hover:text-white'
   },
   {
