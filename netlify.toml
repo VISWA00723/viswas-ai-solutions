@@ -9,38 +9,52 @@
   CI = "false"
   NODE_OPTIONS = "--max-old-space-size=1024"
 
-# Function-specific settings
-[[functions]]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-  external_node_modules = ["sitemap"]
-
-# Increase function timeout to 10 seconds (max allowed by Netlify)
-[[functions]]
-  path = "sitemap.js"
+# Function settings
+[functions]
   node_bundler = "esbuild"
   external_node_modules = ["sitemap"]
   included_files = ["netlify/functions/sitemap.js"]
 
-# Handle Google verification file
+# Redirects and headers
 [[redirects]]
+  # Handle Google verification file
   from = "/google80924ce1f1810e82.html"
   to = "/google80924ce1f1810e82.html"
   status = 200
   force = true
 
-# Handle sitemap.xml through Netlify function
 [[redirects]]
+  # Handle sitemap.xml through Netlify function
   from = "/sitemap.xml"
   to = "/.netlify/functions/sitemap"
   status = 200
   force = true
 
-# SPA fallback - must come after specific routes
 [[redirects]]
+  # SPA fallback - must come after specific routes
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Custom headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, s-maxage=3600"
+    Content-Type = "application/xml"
+    
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/*"
