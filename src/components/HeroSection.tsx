@@ -147,11 +147,14 @@ export function HeroSection() {
                 Get In Touch
               </Button>
               <Button
+                asChild
                 variant="outline"
                 className="border-muted text-muted-foreground hover:bg-muted hover:text-foreground magnetic-hover transition-all duration-300"
               >
-                <Download className="w-4 h-4 mr-2" />
-                Resume
+                <a href="/DOC-20250524-WA0000_.pdf" download>
+                  <Download className="w-4 h-4 mr-2" />
+                  Resume
+                </a>
               </Button>
             </motion.div>
 
