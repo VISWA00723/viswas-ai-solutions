@@ -1,13 +1,13 @@
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, Box, Torus, OrbitControls, Text3D, Center } from '@react-three/drei';
-import { Mesh } from 'three';
+import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
 
 function FloatingObjects() {
-  const sphere1 = useRef<Mesh>(null);
-  const sphere2 = useRef<Mesh>(null);
-  const box = useRef<Mesh>(null);
-  const torus = useRef<Mesh>(null);
+  const sphere1 = useRef<THREE.Mesh>(null);
+  const sphere2 = useRef<THREE.Mesh>(null);
+  const box = useRef<THREE.Mesh>(null);
+  const torus = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -34,21 +34,25 @@ function FloatingObjects() {
 
   return (
     <>
-      <Sphere ref={sphere1} args={[0.5]} position={[-3, 0, 0]}>
+      <mesh ref={sphere1} position={[-3, 0, 0]}>
+        <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial color="#60A5FA" emissive="#60A5FA" emissiveIntensity={0.3} />
-      </Sphere>
+      </mesh>
       
-      <Sphere ref={sphere2} args={[0.3]} position={[3, 0, -2]}>
+      <mesh ref={sphere2} position={[3, 0, -2]}>
+        <sphereGeometry args={[0.3, 32, 32]} />
         <meshStandardMaterial color="#A855F7" emissive="#A855F7" emissiveIntensity={0.4} />
-      </Sphere>
+      </mesh>
       
-      <Box ref={box} args={[0.8, 0.8, 0.8]} position={[2, 2, 0]}>
+      <mesh ref={box} position={[2, 2, 0]}>
+        <boxGeometry args={[0.8, 0.8, 0.8]} />
         <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.2} />
-      </Box>
+      </mesh>
       
-      <Torus ref={torus} args={[1, 0.3, 16, 32]} position={[-2, -1, 1]}>
+      <mesh ref={torus} position={[-2, -1, 1]}>
+        <torusGeometry args={[1, 0.3, 16, 32]} />
         <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
-      </Torus>
+      </mesh>
     </>
   );
 }
@@ -74,6 +78,17 @@ function Scene3DContent() {
   );
 }
 
+function Fallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center bg-muted/20 rounded-lg">
+      <div className="text-center">
+        <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+        <p className="text-muted-foreground">Loading 3D Scene...</p>
+      </div>
+    </div>
+  );
+}
+
 interface Scene3DProps {
   className?: string;
 }
@@ -81,9 +96,22 @@ interface Scene3DProps {
 export function Scene3D({ className = "" }: Scene3DProps) {
   return (
     <div className={`w-full h-full ${className}`}>
-      <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-        <Scene3DContent />
-      </Canvas>
+      <Suspense fallback={<Fallback />}>
+        <Canvas
+          camera={{ position: [0, 0, 8], fov: 45 }}
+          gl={{ 
+            antialias: true,
+            alpha: true,
+            preserveDrawingBuffer: true
+          }}
+          onCreated={({ gl }) => {
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 1;
+          }}
+        >
+          <Scene3DContent />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }
