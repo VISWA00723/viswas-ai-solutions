@@ -173,6 +173,12 @@ export default {
 				'text-glow': {
 					'0%, 100%': { textShadow: '0 0 10px hsl(var(--primary) / 0.5)' },
 					'50%': { textShadow: '0 0 20px hsl(var(--primary) / 0.8), 0 0 30px hsl(var(--primary) / 0.6)' }
+				},
+				'float3d': {
+					'0%, 100%': { transform: 'translateY(0px) rotateX(0deg) rotateY(0deg)' },
+					'25%': { transform: 'translateY(-20px) rotateX(5deg) rotateY(5deg)' },
+					'50%': { transform: 'translateY(0px) rotateX(0deg) rotateY(10deg)' },
+					'75%': { transform: 'translateY(10px) rotateX(-5deg) rotateY(5deg)' }
 				}
 			},
 			animation: {
@@ -192,7 +198,8 @@ export default {
 				'wiggle': 'wiggle 1s ease-in-out infinite',
 				'gradient-shift': 'gradient-shift 8s ease infinite',
 				'skeleton-wave': 'skeleton-wave 1.5s ease-in-out infinite',
-				'text-glow': 'text-glow 2s ease-in-out infinite'
+				'text-glow': 'text-glow 2s ease-in-out infinite',
+				'float3d': 'float3d 6s ease-in-out infinite'
 			},
 			spacing: {
 				'safe-top': 'env(safe-area-inset-top)',
