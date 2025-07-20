@@ -84,6 +84,34 @@ Options -Indexes
   Deny from all
 </Files>
 
-# Custom error pages
-ErrorDocument 404 /404.html
-ErrorDocument 500 /500.html
+# Custom error pages - SPA fallback
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
+
+# SEO-friendly redirects for common misspellings
+RewriteRule ^viswa-portfolio/?$ / [R=301,L]
+RewriteRule ^viswa-dev/?$ / [R=301,L]
+RewriteRule ^portfolio/?$ / [R=301,L]
+RewriteRule ^ai-developer/?$ / [R=301,L]
+RewriteRule ^ml-developer/?$ / [R=301,L]
+RewriteRule ^machine-learning/?$ /#skills [R=301,L]
+RewriteRule ^contact/?$ /#contact [R=301,L]
+RewriteRule ^projects/?$ /#projects [R=301,L]
+RewriteRule ^about/?$ /#about [R=301,L]
+
+# Preload critical resources
+<IfModule mod_headers.c>
+    # Preload primary font
+    Header set Link "</src/index.css>; rel=preload; as=style"
+    
+    # DNS prefetch for performance
+    Header set Link "<https://fonts.googleapis.com>; rel=dns-prefetch"
+    Header set Link "<https://fonts.gstatic.com>; rel=dns-prefetch"
+</IfModule>
+
+# Mobile optimization
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+    AddType image/webp .webp
+    AddType image/avif .avif
+</IfModule>

@@ -39,14 +39,14 @@ export function HeroSection() {
       {/* Particle System */}
       <ParticleSystem />
       
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-20">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 md:py-0">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="space-y-8"
+            className="space-y-6 md:space-y-8 text-center lg:text-left"
           >
             <div className="space-y-4">
               
@@ -54,7 +54,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-                className="text-5xl md:text-7xl font-bold"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
               >
                 <span className="bg-gradient-primary bg-clip-text text-transparent glow-text animate-text-glow">
                   Viswa V R
@@ -65,7 +65,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.8 }}
-                className="text-2xl md:text-3xl font-semibold text-muted-foreground"
+                className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground"
               >
                 <motion.span
                   animate={{ 
@@ -103,7 +103,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.8 }}
-              className="text-lg text-muted-foreground leading-relaxed max-w-lg"
+              className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
               AI/ML Developer with expertise in machine learning, deep learning, and data-driven solutions. 
               Passionate about solving real-world challenges with AI and building scalable, efficient solutions.
@@ -114,7 +114,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.8 }}
-              className="flex flex-wrap gap-4 text-sm text-muted-foreground"
+              className="flex flex-col sm:flex-row justify-center lg:justify-start gap-2 sm:gap-4 text-sm text-muted-foreground"
             >
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
@@ -131,7 +131,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.8 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4"
             >
               <Button
                 onClick={scrollToProjects}
@@ -163,7 +163,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.7, duration: 0.8 }}
-              className="flex space-x-4"
+              className="flex justify-center lg:justify-start space-x-4"
             >
               <a href="https://github.com/VISWA00723" target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary magnetic-hover transition-all duration-300 hover:shadow-glow">
@@ -183,7 +183,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.8, x: 100 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-            className="relative h-[600px] lg:h-[700px]"
+            className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] order-first lg:order-last"
           >
             <Scene3D className="w-full h-full" />
           </motion.div>

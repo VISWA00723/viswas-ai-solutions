@@ -124,6 +124,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    min-height: 100vh;
   }
 }
 
@@ -213,5 +215,80 @@ All colors MUST be HSL.
     background: var(--gradient-primary);
     transform-origin: 0%;
     z-index: 9999;
+  }
+
+  /* Mobile-First Responsive Design */
+  .container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Mobile Typography Scale */
+  .text-responsive-xs { @apply text-xs sm:text-sm; }
+  .text-responsive-sm { @apply text-sm sm:text-base; }
+  .text-responsive-base { @apply text-base sm:text-lg; }
+  .text-responsive-lg { @apply text-lg sm:text-xl; }
+  .text-responsive-xl { @apply text-xl sm:text-2xl; }
+  .text-responsive-2xl { @apply text-2xl sm:text-3xl; }
+  .text-responsive-3xl { @apply text-3xl sm:text-4xl md:text-5xl; }
+  .text-responsive-4xl { @apply text-4xl sm:text-5xl md:text-6xl; }
+
+  /* Mobile-Friendly Spacing */
+  .section-padding { @apply py-16 sm:py-20 md:py-24 lg:py-32; }
+  .content-padding { @apply px-4 sm:px-6 lg:px-8; }
+
+  /* Touch-Friendly Buttons */
+  .btn-touch {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+
+  /* Mobile Grid Systems */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 lg:grid-cols-2;
+  }
+
+  /* Safe Areas for Mobile */
+  .safe-top { @apply pt-safe-top; }
+  .safe-bottom { @apply pb-safe-bottom; }
+
+  /* Performance Optimizations */
+  .will-change-transform { will-change: transform; }
+  .will-change-opacity { will-change: opacity; }
+  .gpu-accelerated { transform: translateZ(0); }
+
+  /* Focus Management for Accessibility */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .glow-text {
+      text-shadow: none;
+    }
+    
+    .shadow-glow {
+      box-shadow: 0 0 0 2px hsl(var(--primary));
+    }
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .morphing-bg {
+      animation: none;
+    }
+    
+    .particle {
+      animation: none;
+    }
+    
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

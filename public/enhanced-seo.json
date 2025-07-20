@@ -1,0 +1,198 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "Viswa V R",
+      "alternateName": ["Viswa", "Viswa Dev", "Viswa Developer", "Viswa AI", "Viswa ML"],
+      "description": "Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist from Bengaluru. Expert in machine learning, deep learning, React, Node.js, Python. Available for AI consulting, ML projects & development.",
+      "url": "https://viswap.netlify.app",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://viswap.netlify.app/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "sameAs": [
+        "https://github.com/VISWA00723",
+        "https://www.linkedin.com/in/viswa-v-r-41871324a/"
+      ],
+      "jobTitle": "AI/ML Developer & Full Stack Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Rangsons Aerospace Private Limited",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bengaluru",
+          "addressRegion": "Karnataka",
+          "addressCountry": "India"
+        }
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Kalasalingam University",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "India"
+        }
+      },
+      "knowsAbout": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Deep Learning",
+        "Python Programming",
+        "React Development",
+        "Full Stack Development", 
+        "Data Science",
+        "Computer Vision",
+        "Natural Language Processing",
+        "Predictive Analytics",
+        "AWS Cloud Computing",
+        "Statistical Modeling",
+        "Database Management",
+        "Software Engineering",
+        "Web Development",
+        "GenAI Tools",
+        "Transformers",
+        "TensorFlow",
+        "PyTorch",
+        "FastAPI",
+        "Streamlit"
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "AI/ML Developer and Full Stack Engineer",
+        "occupationLocation": {
+          "@type": "City",
+          "name": "Bengaluru",
+          "containedInPlace": {
+            "@type": "Country",
+            "name": "India"
+          }
+        },
+        "skills": "AI/ML Development, Full Stack Engineering, Data Science, Python, React, Node.js, Machine Learning, Deep Learning, Computer Vision, NLP, AWS, Database Management",
+        "responsibilities": "Developing AI-powered applications, Creating machine learning models, Building scalable web applications, Data analysis and visualization, Cloud deployment and management"
+      },
+      "email": "viswavr54@gmail.com",
+      "telephone": "+91-6380985188",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka", 
+        "addressCountry": "India"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "professional",
+        "telephone": "+91-6380985188",
+        "email": "viswavr54@gmail.com",
+        "availableLanguage": ["English", "Hindi", "Tamil"],
+        "description": "Contact Viswa for AI/ML development projects, full stack engineering, data science consulting"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "name": "Viswa Portfolio - AI/ML Developer & Full Stack Engineer",
+      "alternateName": ["Viswa Portfolio", "Viswa Dev Portfolio", "Viswa AI Solutions"],
+      "url": "https://viswap.netlify.app",
+      "description": "Official portfolio of Viswa V R showcasing AI/ML projects, full stack development work, and professional expertise. Leading AI developer in Bengaluru.",
+      "publisher": {
+        "@type": "Person",
+        "name": "Viswa V R"
+      },
+      "inLanguage": "en-US",
+      "copyrightYear": 2025,
+      "copyrightHolder": {
+        "@type": "Person",
+        "name": "Viswa V R"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://viswap.netlify.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Viswa V R"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "name": "Viswa AI Solutions",
+      "description": "Professional AI/ML development and full stack engineering services by Viswa V R. Specializing in machine learning, deep learning, web development, and data science solutions.",
+      "provider": {
+        "@type": "Person",
+        "name": "Viswa V R"
+      },
+      "areaServed": ["India", "Global"],
+      "serviceType": [
+        "AI/ML Development",
+        "Machine Learning Consulting",
+        "Deep Learning Solutions",
+        "Full Stack Development",
+        "Data Science Services",
+        "Web Development",
+        "Python Development",
+        "React Development",
+        "Cloud Solutions",
+        "Database Management",
+        "Computer Vision",
+        "Natural Language Processing",
+        "Predictive Analytics"
+      ],
+      "priceRange": "$$",
+      "url": "https://viswap.netlify.app",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+91-6380985188",
+        "email": "viswavr54@gmail.com"
+      },
+      "offers": [
+        {
+          "@type": "Service",
+          "name": "AI/ML Development",
+          "description": "Custom AI and machine learning solutions for business automation and data insights"
+        },
+        {
+          "@type": "Service", 
+          "name": "Full Stack Development",
+          "description": "End-to-end web application development using modern technologies"
+        },
+        {
+          "@type": "Service",
+          "name": "Data Science Consulting",
+          "description": "Data analysis, visualization, and predictive modeling services"
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "name": "Viswa AI Solutions",
+      "url": "https://viswap.netlify.app",
+      "logo": "https://viswap.netlify.app/og-image.jpg",
+      "foundingDate": "2023",
+      "founder": {
+        "@type": "Person",
+        "name": "Viswa V R"
+      },
+      "description": "Leading AI/ML development and full stack engineering services in Bengaluru",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "addressCountry": "India"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+91-6380985188",
+        "email": "viswavr54@gmail.com"
+      },
+      "sameAs": [
+        "https://github.com/VISWA00723",
+        "https://www.linkedin.com/in/viswa-v-r-41871324a/"
+      ]
+    }
+  ]
+}
