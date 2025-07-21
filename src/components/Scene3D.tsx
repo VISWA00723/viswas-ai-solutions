@@ -1,43 +1,8 @@
 import { useRef, Suspense, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Float, Text3D, MeshDistortMaterial, Sphere, Environment, PerspectiveCamera, useTexture, Center, Sparkles, Stars } from '@react-three/drei';
+import { OrbitControls, Float, MeshDistortMaterial, Environment, Sparkles, Stars } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
-
-// Floating Text Component
-function FloatingText() {
-  const textRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (textRef.current) {
-      textRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
-      textRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.3;
-    }
-  });
-
-  return (
-    <Center>
-      <Float speed={3} rotationIntensity={0.3} floatIntensity={0.5}>
-        <Text3D
-          ref={textRef}
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={1.2}
-          height={0.15}
-          position={[0, 2, -2]}
-        >
-          VISWA DEV
-          <meshStandardMaterial 
-            color="#60A5FA"
-            emissive="#60A5FA"
-            emissiveIntensity={0.4}
-            roughness={0.1}
-            metalness={0.8}
-          />
-        </Text3D>
-      </Float>
-    </Center>
-  );
-}
 
 // Enhanced Floating Objects
 function FloatingObjects() {
@@ -329,9 +294,6 @@ function Scene3DContent() {
       {/* Stars and Sparkles for depth */}
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
       <Sparkles count={100} scale={[10, 10, 10]} size={3} speed={0.4} />
-      
-      {/* Add floating text */}
-      <FloatingText />
       
       <FloatingObjects />
       <CameraRig />
