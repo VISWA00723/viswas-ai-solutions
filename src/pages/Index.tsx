@@ -24,9 +24,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <SEO 
-        title="Viswa V R - AI/ML Developer & Full Stack Engineer | Top AI Expert Bengaluru"
-        description="Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist from Bengaluru. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Available for AI consulting and development projects."
-        keywords="Viswa V R, Viswa Developer, AI Developer Bengaluru, ML Engineer India, Full Stack Developer, Machine Learning Expert, Deep Learning Specialist, React Developer, Node.js Expert, Python Developer, Data Scientist, AI Consultant, ML Consultant, Bengaluru AI Expert, India ML Developer, Artificial Intelligence Expert, AI Solutions, ML Engineering, Data Science Expert, Software Engineer Bengaluru"
+        title="Viswa Dev - #1 AI/ML Developer & Full Stack Engineer | Hire Viswa Developer"
+        description="Viswa Dev (Viswa V R) - Top-rated AI/ML Developer, Full Stack Engineer, and Data Scientist from Bengaluru. Available for hire. Expert in machine learning, deep learning, React, Node.js, Python. Viswa Dev delivers premium AI solutions and web development services."
+        keywords="Viswa Dev, Viswa Developer, Hire Viswa Dev, Viswa V R, AI Developer Bengaluru, ML Engineer India, Full Stack Developer, Machine Learning Expert, Deep Learning Specialist, React Developer, Node.js Expert, Python Developer, Data Scientist, AI Consultant, ML Consultant, Bengaluru AI Expert, India ML Developer, Artificial Intelligence Expert, AI Solutions, ML Engineering, Data Science Expert, Software Engineer Bengaluru, Top AI Developer, Best ML Engineer, Premium Developer Services, Viswa AI Solutions"
         url="https://viswap.netlify.app"
         type="website"
       />

@@ -12,16 +12,16 @@ interface SEOProps {
 }
 
 export const SEO: React.FC<SEOProps> = ({
-  title = 'Viswa - AI/ML Developer & Full Stack Engineer | Viswa Portfolio',
-  description = 'Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Discover Viswa\'s innovative projects and professional expertise.',
-  keywords = 'Viswa, Viswa V R, Viswa Developer, Viswa AI, Viswa ML, Viswa Portfolio, Viswa Projects, AI Developer Viswa, ML Engineer Viswa, Full Stack Developer Viswa, Machine Learning Expert Viswa, Deep Learning Specialist Viswa, React Developer Viswa, Node.js Expert Viswa, Python Developer Viswa, Data Scientist Viswa, Software Engineer Viswa, Web Developer Viswa, Tech Expert Viswa, Viswa Tech, Viswa Solutions, Viswa AI Solutions',
+  title = 'Viswa Dev - Top AI/ML Developer & Full Stack Engineer | Viswa V R Portfolio',
+  description = 'Viswa Dev (Viswa V R) - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist from Bengaluru. Expert in machine learning, deep learning, React, Node.js, Python, AI solutions. Top-rated developer for hire. Viswa Dev delivers cutting-edge technology solutions.',
+  keywords = 'Viswa Dev, Viswa, Viswa V R, Viswa Developer, Viswa AI, Viswa ML, Viswa Portfolio, Viswa Projects, Viswa Dev Portfolio, AI Developer Viswa, ML Engineer Viswa, Full Stack Developer Viswa, Machine Learning Expert Viswa, Deep Learning Specialist Viswa, React Developer Viswa, Node.js Expert Viswa, Python Developer Viswa, Data Scientist Viswa, Software Engineer Viswa, Web Developer Viswa, Tech Expert Viswa, Viswa Tech, Viswa Solutions, Viswa AI Solutions, Bengaluru AI Developer, Bengaluru ML Engineer, Hire Viswa Dev, Viswa Developer for Hire, Top AI Developer India',
   image = 'https://viswap.netlify.app/og-image.jpg',
   url = 'https://viswap.netlify.app',
   type = 'website',
   author = 'Viswa V R',
   canonical = 'https://viswap.netlify.app'
 }) => {
-  const siteName = 'Viswa - Portfolio';
+  const siteName = 'Viswa Dev - Portfolio';
   const twitterHandle = '@viswa_dev';
   
   return (
@@ -57,19 +57,58 @@ export const SEO: React.FC<SEOProps> = ({
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Person',
-          'name': 'Viswa',
+          'name': 'Viswa Dev',
+          'alternateName': ['Viswa', 'Viswa V R', 'Viswa Developer', 'Viswa AI', 'Viswa ML'],
           'url': url,
+          'image': image,
           'sameAs': [
-            'https://github.com/viswa',
-            'https://linkedin.com/in/viswa',
+            'https://github.com/VISWA00723',
+            'https://www.linkedin.com/in/viswa-v-r-41871324a/',
             'https://twitter.com/viswa_dev'
           ],
-          'jobTitle': 'Full Stack Developer',
+          'jobTitle': 'AI/ML Developer & Full Stack Engineer',
           'worksFor': {
             '@type': 'Organization',
+            'name': 'Viswa AI Solutions',
+            'url': url
+          },
+          'knowsAbout': [
+            'Artificial Intelligence',
+            'Machine Learning',
+            'Deep Learning',
+            'Full Stack Development',
+            'React.js',
+            'Node.js',
+            'Python Programming',
+            'Data Science'
+          ],
+          'address': {
+            '@type': 'PostalAddress',
+            'addressLocality': 'Bengaluru',
+            'addressCountry': 'India'
+          },
+          'description': description,
+          'email': 'viswavr54@gmail.com',
+          'telephone': '+916380985188'
+        })}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          'name': 'Viswa Dev Portfolio',
+          'alternateName': 'Viswa Developer Portfolio',
+          'url': url,
+          'description': 'Official portfolio of Viswa Dev - Top AI/ML Developer and Full Stack Engineer',
+          'author': {
+            '@type': 'Person',
             'name': 'Viswa Dev'
           },
-          'description': description
+          'potentialAction': {
+            '@type': 'SearchAction',
+            'target': `${url}?q={search_term_string}`,
+            'query-input': 'required name=search_term_string'
+          }
         })}
       </script>
     </Helmet>

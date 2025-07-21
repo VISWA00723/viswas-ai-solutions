@@ -1,9 +1,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Viswa V R",
-  "alternateName": ["Viswa", "Viswa Dev", "Viswa Developer", "Viswa AI", "Viswa ML", "Viswa Tech"],
-  "description": "Viswa V R - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist. Expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Viswa specializes in creating innovative AI solutions and modern web applications.",
+  "name": "Viswa Dev",
+  "alternateName": ["Viswa", "Viswa V R", "Viswa Developer", "Viswa AI", "Viswa ML", "Viswa Tech", "VD", "Viswa Dev Portfolio"],
+  "description": "Viswa Dev - Top-rated AI/ML Developer, Full Stack Engineer, and Data Scientist. Leading expert in machine learning, deep learning, React, Node.js, Python, and cutting-edge web technologies. Viswa Dev specializes in creating innovative AI solutions and modern web applications. Available for hire.",
   "url": "https://viswap.netlify.app",
   "image": "https://viswap.netlify.app/profile-image.jpg",
   "sameAs": [
@@ -13,8 +13,9 @@
   "jobTitle": "AI/ML Developer & Full Stack Engineer",
   "worksFor": {
     "@type": "Organization",
-    "name": "Viswa AI Solutions",
-    "description": "Innovative AI and web development solutions by Viswa"
+    "name": "Viswa Dev Solutions",
+    "alternateName": "Viswa AI Solutions",
+    "description": "Innovative AI and web development solutions by Viswa Dev"
   },
   "knowsAbout": [
     "Artificial Intelligence",

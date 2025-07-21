@@ -1,9 +1,45 @@
 import { useRef, Suspense, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Float, Text3D, MeshDistortMaterial, Sphere, Environment, PerspectiveCamera, useTexture } from '@react-three/drei';
+import { OrbitControls, Float, Text3D, MeshDistortMaterial, Sphere, Environment, PerspectiveCamera, useTexture, Center, Sparkles, Stars } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
+// Floating Text Component
+function FloatingText() {
+  const textRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((state) => {
+    if (textRef.current) {
+      textRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+      textRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.3;
+    }
+  });
+
+  return (
+    <Center>
+      <Float speed={3} rotationIntensity={0.3} floatIntensity={0.5}>
+        <Text3D
+          ref={textRef}
+          font="/fonts/helvetiker_regular.typeface.json"
+          size={1.2}
+          height={0.15}
+          position={[0, 2, -2]}
+        >
+          VISWA DEV
+          <meshStandardMaterial 
+            color="#60A5FA"
+            emissive="#60A5FA"
+            emissiveIntensity={0.4}
+            roughness={0.1}
+            metalness={0.8}
+          />
+        </Text3D>
+      </Float>
+    </Center>
+  );
+}
+
+// Enhanced Floating Objects
 function FloatingObjects() {
   const sphere1 = useRef<THREE.Mesh>(null);
   const sphere2 = useRef<THREE.Mesh>(null);
@@ -11,6 +47,8 @@ function FloatingObjects() {
   const torus = useRef<THREE.Mesh>(null);
   const dodecahedron = useRef<THREE.Mesh>(null);
   const octahedron = useRef<THREE.Mesh>(null);
+  const icosahedron = useRef<THREE.Mesh>(null);
+  const cone = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -56,6 +94,21 @@ function FloatingObjects() {
       octahedron.current.rotation.y = time * 0.2;
       octahedron.current.position.z = Math.sin(time * 0.9) * 2;
       octahedron.current.position.y = Math.cos(time * 1.1) * 1;
+    }
+
+    if (icosahedron.current) {
+      icosahedron.current.rotation.x = time * 0.4;
+      icosahedron.current.rotation.y = time * 0.6;
+      icosahedron.current.rotation.z = time * 0.2;
+      icosahedron.current.position.x = Math.sin(time * 0.7) * 2.5;
+      icosahedron.current.position.z = Math.cos(time * 0.5) * 1.8;
+    }
+
+    if (cone.current) {
+      cone.current.rotation.x = time * 0.3;
+      cone.current.rotation.z = time * 0.5;
+      cone.current.position.y = Math.sin(time * 1.3) * 1.5;
+      cone.current.position.x = Math.cos(time * 0.6) * 2;
     }
   });
 
@@ -159,19 +212,71 @@ function FloatingObjects() {
         </mesh>
       </Float>
 
-      {/* Floating Particles */}
-      {Array.from({ length: 20 }).map((_, i) => (
-        <Float key={i} speed={1 + Math.random() * 2} rotationIntensity={0.5} floatIntensity={1}>
+      {/* New Icosahedron */}
+      <Float speed={2.8} rotationIntensity={2} floatIntensity={2.2}>
+        <mesh ref={icosahedron} position={[3, -1, 1]}>
+          <icosahedronGeometry args={[0.9]} />
+          <MeshDistortMaterial
+            color="#F97316"
+            emissive="#F97316"
+            emissiveIntensity={0.5}
+            distort={0.3}
+            speed={2.5}
+            roughness={0.2}
+            metalness={0.7}
+          />
+        </mesh>
+      </Float>
+
+      {/* New Cone */}
+      <Float speed={2.1} rotationIntensity={1.8} floatIntensity={1.3}>
+        <mesh ref={cone} position={[-3, 2, -1]}>
+          <coneGeometry args={[0.8, 1.6, 8]} />
+          <meshStandardMaterial 
+            color="#8B5CF6" 
+            emissive="#8B5CF6" 
+            emissiveIntensity={0.4}
+            roughness={0.3}
+            metalness={0.6}
+          />
+        </mesh>
+      </Float>
+
+      {/* Enhanced Floating Particles with better distribution */}
+      {Array.from({ length: 30 }).map((_, i) => (
+        <Float key={i} speed={0.5 + Math.random() * 2} rotationIntensity={0.3} floatIntensity={0.8}>
           <mesh position={[
-            (Math.random() - 0.5) * 10,
-            (Math.random() - 0.5) * 10,
-            (Math.random() - 0.5) * 10
+            (Math.random() - 0.5) * 12,
+            (Math.random() - 0.5) * 8,
+            (Math.random() - 0.5) * 12
           ]}>
-            <sphereGeometry args={[0.05 + Math.random() * 0.1, 8, 8]} />
+            <sphereGeometry args={[0.03 + Math.random() * 0.08, 6, 6]} />
             <meshStandardMaterial 
-              color={new THREE.Color().setHSL(Math.random(), 0.8, 0.7)}
-              emissive={new THREE.Color().setHSL(Math.random(), 0.8, 0.3)}
-              emissiveIntensity={0.5}
+              color={new THREE.Color().setHSL(Math.random(), 0.9, 0.8)}
+              emissive={new THREE.Color().setHSL(Math.random(), 0.9, 0.4)}
+              emissiveIntensity={0.6}
+              transparent
+              opacity={0.8}
+            />
+          </mesh>
+        </Float>
+      ))}
+
+      {/* AI/ML themed floating icons */}
+      {Array.from({ length: 8 }).map((_, i) => (
+        <Float key={`ai-${i}`} speed={1 + Math.random()} rotationIntensity={1} floatIntensity={1.5}>
+          <mesh position={[
+            (Math.random() - 0.5) * 8,
+            (Math.random() - 0.5) * 6,
+            (Math.random() - 0.5) * 8
+          ]}>
+            <tetrahedronGeometry args={[0.2 + Math.random() * 0.3]} />
+            <meshStandardMaterial 
+              color={['#60A5FA', '#A855F7', '#10B981', '#F59E0B', '#EF4444'][Math.floor(Math.random() * 5)]}
+              emissive={['#60A5FA', '#A855F7', '#10B981', '#F59E0B', '#EF4444'][Math.floor(Math.random() * 5)]}
+              emissiveIntensity={0.3}
+              roughness={0.1}
+              metalness={0.9}
             />
           </mesh>
         </Float>
@@ -196,21 +301,37 @@ function Scene3DContent() {
   return (
     <>
       {/* Enhanced Lighting Setup */}
-      <ambientLight intensity={0.2} color="#404080" />
+      <ambientLight intensity={0.3} color="#1a1a2e" />
       <spotLight 
         position={[10, 10, 10]} 
-        angle={0.3} 
+        angle={0.4} 
         penumbra={1} 
-        intensity={2}
+        intensity={2.5}
+        color="#ffffff"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+      />
+      <pointLight position={[-10, -10, -10]} intensity={1.2} color="#60A5FA" />
+      <pointLight position={[10, -10, 10]} intensity={0.8} color="#A855F7" />
+      <pointLight position={[0, 10, 0]} intensity={0.6} color="#10B981" />
+      <pointLight position={[5, 5, -5]} intensity={0.4} color="#F59E0B" />
+      <directionalLight 
+        position={[5, 10, 5]} 
+        intensity={0.5} 
         color="#ffffff"
         castShadow
       />
-      <pointLight position={[-10, -10, -10]} intensity={0.8} color="#60A5FA" />
-      <pointLight position={[10, -10, 10]} intensity={0.6} color="#A855F7" />
-      <pointLight position={[0, 10, 0]} intensity={0.4} color="#10B981" />
       
-      {/* Environment for reflections */}
-      <Environment preset="city" background={false} />
+      {/* Enhanced Environment for better reflections */}
+      <Environment preset="warehouse" background={false} environmentIntensity={0.6} />
+      
+      {/* Stars and Sparkles for depth */}
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      <Sparkles count={100} scale={[10, 10, 10]} size={3} speed={0.4} />
+      
+      {/* Add floating text */}
+      <FloatingText />
       
       <FloatingObjects />
       <CameraRig />
@@ -262,21 +383,28 @@ export function Scene3D({ className = "" }: Scene3DProps) {
       <Suspense fallback={<Fallback />}>
         <Canvas
           shadows
-          camera={{ position: [0, 0, 12], fov: 50 }}
+          camera={{ position: [0, 0, 15], fov: 45 }}
           gl={{ 
             antialias: true,
             alpha: true,
             preserveDrawingBuffer: true,
-            powerPreference: "high-performance"
+            powerPreference: "high-performance",
+            logarithmicDepthBuffer: true
           }}
-          onCreated={({ gl, scene }) => {
+          onCreated={({ gl, scene, camera }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.toneMappingExposure = 1.2;
+            gl.toneMappingExposure = 1.4;
             gl.shadowMap.enabled = true;
             gl.shadowMap.type = THREE.PCFSoftShadowMap;
-            scene.fog = new THREE.Fog('#000000', 8, 20);
+            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            scene.fog = new THREE.Fog('#0a0a0a', 12, 25);
+            
+            // Enhanced camera settings
+            camera.near = 0.1;
+            camera.far = 1000;
+            camera.updateProjectionMatrix();
           }}
-          performance={{ min: 0.8 }}
+          performance={{ min: 0.8, max: 1.0, debounce: 200 }}
         >
           <Scene3DContent />
         </Canvas>
