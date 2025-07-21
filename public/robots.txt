@@ -17,7 +17,6 @@ Allow: /*.svg
 # Specific instructions for major search engines
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /

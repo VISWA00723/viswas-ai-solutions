@@ -970,7 +970,7 @@ var require_sitemap_stream = __commonJS({
       }
     };
     exports2.SitemapStream = SitemapStream2;
-    function streamToPromise(stream) {
+    function streamToPromise2(stream) {
       return new Promise((resolve, reject) => {
         const drain = [];
         stream.on("error", reject).pipe(new stream_1.Writable({
@@ -987,7 +987,7 @@ var require_sitemap_stream = __commonJS({
         });
       });
     }
-    exports2.streamToPromise = streamToPromise;
+    exports2.streamToPromise = streamToPromise2;
   }
 });
 
@@ -3461,6 +3461,7 @@ __export(sitemap_exports, {
 });
 module.exports = __toCommonJS(sitemap_exports);
 var import_sitemap = __toESM(require_dist());
+var import_stream = require("stream");
 console.log("Sitemap function initialized");
 var log = (...args) => {
   console.log("[Sitemap]", ...args);
@@ -3530,19 +3531,12 @@ var handler = async (event, context) => {
       priority: page.priority,
       lastmod: page.lastmod
     }));
-    let sitemapXml = "";
-    for (const link of links) {
-      stream.write(link);
-    }
-    stream.end();
-    for await (const chunk of stream) {
-      sitemapXml += chunk.toString("utf-8");
-    }
+    const sitemapXml = await (0, import_sitemap.streamToPromise)(import_stream.Readable.from(links).pipe(stream)).then((data) => data.toString("utf-8"));
     log("Sitemap generated successfully");
     return {
       statusCode: 200,
       headers: {
-        "Content-Type": "application/xml",
+        "Content-Type": "application/xml; charset=utf-8",
         "Cache-Control": "public, max-age=3600, s-maxage=3600",
         "X-Sitemap-Generated-At": (/* @__PURE__ */ new Date()).toISOString()
       },

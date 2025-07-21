@@ -1,5 +1,5 @@
 // Import required modules
-import { SitemapStream } from 'sitemap';
+import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
 
 // Enable detailed logging
@@ -15,7 +15,6 @@ const logError = (error, context = '') => {
   console.error(`[Sitemap Error] ${context}`, error);
 };
 
-// Main handler function
 // Main handler function
 export const handler = async (event, context) => {
   log('Request received:', {
@@ -88,29 +87,17 @@ export const handler = async (event, context) => {
       lastmod: page.lastmod,
     }));
 
-    // Generate the sitemap XML
-    let sitemapXml = '';
-    
-    // Write all links to the sitemap
-    for (const link of links) {
-      stream.write(link);
-    }
-    
-    // End the stream
-    stream.end();
+    // Generate the sitemap XML using a promise
+    const sitemapXml = await streamToPromise(Readable.from(links).pipe(stream))
+      .then(data => data.toString('utf-8'));
 
-    // Collect all data from the stream
-    for await (const chunk of stream) {
-      sitemapXml += chunk.toString('utf-8');
-    }
-    
     log('Sitemap generated successfully');
     
     // Return the sitemap
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/xml',
+        'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=3600, s-maxage=3600',
         'X-Sitemap-Generated-At': new Date().toISOString()
       },
