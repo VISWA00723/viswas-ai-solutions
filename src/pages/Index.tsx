@@ -9,7 +9,6 @@ import { EducationSection } from '@/components/EducationSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ScrollProgress } from '@/components/ScrollProgress';
-import { ParallaxContainer } from '@/components/ParallaxContainer';
 import SEO from '@/components/SEO';
 
 const Index = () => {
@@ -35,24 +34,12 @@ const Index = () => {
       <Navigation />
       <main className="relative">
         <HeroSection />
-        <ParallaxContainer speed={1.2} className="relative">
-          <AboutSection />
-        </ParallaxContainer>
-        <ParallaxContainer speed={1.5} rotateOnScroll={true} className="relative">
-          <SkillsSection />
-        </ParallaxContainer>
-        <ParallaxContainer speed={1.1} className="relative">
-          <ExperienceSection />
-        </ParallaxContainer>
-        <ParallaxContainer speed={1.3} scaleOnScroll={true} className="relative">
-          <ProjectsSection />
-        </ParallaxContainer>
-        <ParallaxContainer speed={1.2} className="relative">
-          <EducationSection />
-        </ParallaxContainer>
-        <ParallaxContainer speed={1.4} className="relative">
-          <ContactSection />
-        </ParallaxContainer>
+        <AboutSection />
+        <SkillsSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <EducationSection />
+        <ContactSection />
       </main>
       <Footer />
     </div>
