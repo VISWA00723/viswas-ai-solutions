@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Scene3D } from './Scene3D';
 import { ParticleSystem } from './ParticleSystem';
+import { ParallaxContainer } from './ParallaxContainer';
 import { Mail, Phone, MapPin, Github, Linkedin, Download } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -36,8 +37,10 @@ export function HeroSection() {
       className="min-h-screen relative overflow-hidden bg-background morphing-bg"
       style={{ y, opacity }}
     >
-      {/* Particle System */}
-      <ParticleSystem />
+      {/* Particle System with Parallax */}
+      <ParallaxContainer speed={0.5} className="absolute inset-0">
+        <ParticleSystem />
+      </ParallaxContainer>
       
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 md:py-0">
@@ -178,15 +181,17 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - 3D Scene */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 100 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-            className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] order-first lg:order-last"
-          >
-            <Scene3D className="w-full h-full" />
-          </motion.div>
+          {/* Right Content - 3D Scene with Enhanced Parallax */}
+          <ParallaxContainer speed={2} depth={2} rotateOnScroll={true}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, x: 100 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
+              className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] order-first lg:order-last"
+            >
+              <Scene3D className="w-full h-full" />
+            </motion.div>
+          </ParallaxContainer>
         </div>
       </div>
 

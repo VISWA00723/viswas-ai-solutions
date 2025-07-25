@@ -1,10 +1,11 @@
 import { useRef, Suspense, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Float, MeshDistortMaterial, Environment, Sparkles, Stars } from '@react-three/drei';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import * as THREE from 'three';
+import { useParallax } from '@/hooks/useParallax';
 
-// Enhanced Floating Objects
+// Enhanced Floating Objects with Parallax Integration
 function FloatingObjects() {
   const sphere1 = useRef<THREE.Mesh>(null);
   const sphere2 = useRef<THREE.Mesh>(null);
@@ -14,15 +15,18 @@ function FloatingObjects() {
   const octahedron = useRef<THREE.Mesh>(null);
   const icosahedron = useRef<THREE.Mesh>(null);
   const cone = useRef<THREE.Mesh>(null);
+  const { scrollYProgress } = useScroll();
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
+    const scrollOffset = scrollYProgress.get();
     
     if (sphere1.current) {
-      sphere1.current.position.y = Math.sin(time * 0.8) * 1.2;
-      sphere1.current.rotation.x = time * 0.4;
-      sphere1.current.rotation.z = time * 0.2;
-      sphere1.current.scale.setScalar(1 + Math.sin(time * 2) * 0.1);
+      sphere1.current.position.y = Math.sin(time * 0.8 + scrollOffset * 2) * 1.2;
+      sphere1.current.position.z = scrollOffset * 3;
+      sphere1.current.rotation.x = time * 0.4 + scrollOffset * Math.PI;
+      sphere1.current.rotation.z = time * 0.2 + scrollOffset * 0.5;
+      sphere1.current.scale.setScalar(1 + Math.sin(time * 2) * 0.1 + scrollOffset * 0.3);
     }
     
     if (sphere2.current) {
@@ -252,10 +256,24 @@ function FloatingObjects() {
 
 function CameraRig() {
   const { camera, mouse } = useThree();
+  const { scrollYProgress } = useScroll();
   
   useFrame(() => {
-    camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
-    camera.position.y += (-mouse.y * 2 - camera.position.y) * 0.02;
+    const scrollOffset = scrollYProgress.get();
+    
+    // Enhanced camera movement with parallax
+    const targetX = mouse.x * 2 + scrollOffset * 4;
+    const targetY = -mouse.y * 2 + scrollOffset * 3;
+    const targetZ = 15 + scrollOffset * 10;
+    
+    camera.position.x += (targetX - camera.position.x) * 0.02;
+    camera.position.y += (targetY - camera.position.y) * 0.02;
+    camera.position.z += (targetZ - camera.position.z) * 0.01;
+    
+    // Scroll-based camera rotation for 3D parallax effect
+    camera.rotation.x = scrollOffset * 0.3;
+    camera.rotation.y = scrollOffset * 0.1;
+    
     camera.lookAt(0, 0, 0);
   });
   
