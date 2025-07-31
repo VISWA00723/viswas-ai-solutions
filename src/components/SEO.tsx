@@ -12,9 +12,9 @@ interface SEOProps {
 }
 
 export const SEO: React.FC<SEOProps> = ({
-  title = 'Viswa Dev - Top AI/ML Developer & Full Stack Engineer | Viswa V R Portfolio',
-  description = 'Viswa Dev (Viswa V R) - Leading AI/ML Developer, Full Stack Engineer, and Data Scientist from Bengaluru. Expert in machine learning, deep learning, React, Node.js, Python, AI solutions. Top-rated developer for hire. Viswa Dev delivers cutting-edge technology solutions.',
-  keywords = 'Viswa Dev, Viswa, Viswa V R, Viswa Developer, Viswa AI, Viswa ML, Viswa Portfolio, Viswa Projects, Viswa Dev Portfolio, AI Developer Viswa, ML Engineer Viswa, Full Stack Developer Viswa, Machine Learning Expert Viswa, Deep Learning Specialist Viswa, React Developer Viswa, Node.js Expert Viswa, Python Developer Viswa, Data Scientist Viswa, Software Engineer Viswa, Web Developer Viswa, Tech Expert Viswa, Viswa Tech, Viswa Solutions, Viswa AI Solutions, Bengaluru AI Developer, Bengaluru ML Engineer, Hire Viswa Dev, Viswa Developer for Hire, Top AI Developer India',
+  title = 'Viswa Dev (Viswa VR) | Expert AI/ML & Full Stack Developer | Custom AI Solutions',
+  description = 'Hire Viswa Dev (Viswa VR), a top-tier AI/ML and Full Stack Engineer based in Bengaluru. Specializing in custom AI solutions, deep learning, NLP, computer vision, and high-performance web applications with React and Python. Your go-to expert for generative AI, predictive analytics, and scalable cloud deployment.',
+  keywords = 'Viswa Dev, Viswa VR, Viswa V R, Viswa Dev Portfolio, Viswa Dev AI, Viswa Dev ML, Hire Viswa Dev, AI Developer, ML Engineer, Full Stack Developer, Generative AI, LLM, Custom AI Solutions, Hire AI Developer, Freelance AI Engineer, AI Developer Bengaluru, Python AI Developer, React Developer, TensorFlow, PyTorch, AWS, FastAPI, NLP Expert, Computer Vision Specialist, Predictive Analytics, AI for Startups, AI Consultant, Machine Learning Services, Deep Learning Engineer, Web App Developer, Software Developer India, AI Development Freelancer, AI Consulting Services, Backend Developer, Frontend Developer, MERN Stack, Django Developer, Flask Developer, Data Science Expert, AI Engineer India, Model Deployment Expert, MLOps, AI Web Integration, AI Chatbot Developer, AI Resume Screener, OCR Specialist, API Developer, Cloud AI Solutions, AI System Design, AI Researcher, Fine-tuning LLMs, AI Solutions for Enterprises, AI MVP Builder, Scalable Web Systems',
   image = 'https://viswap.netlify.app/og-image.jpg',
   url = 'https://viswap.netlify.app',
   type = 'website',
@@ -32,6 +32,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="author" content={author} />
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow" />
+      <meta name="bingbot" content="index, follow" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
@@ -72,6 +73,10 @@ export const SEO: React.FC<SEOProps> = ({
             'name': 'Viswa AI Solutions',
             'url': url
           },
+          'alumniOf': {
+            '@type': 'CollegeOrUniversity',
+            'name': 'Your University Name' // TODO: Replace with your actual university
+          },
           'knowsAbout': [
             'Artificial Intelligence',
             'Machine Learning',
@@ -109,6 +114,23 @@ export const SEO: React.FC<SEOProps> = ({
             'target': `${url}?q={search_term_string}`,
             'query-input': 'required name=search_term_string'
           }
+        })}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          'serviceType': 'Software Development',
+          'provider': {
+            '@type': 'Person',
+            'name': 'Viswa VR'
+          },
+          'areaServed': {
+            '@type': 'Country',
+            'name': 'India'
+          },
+          'description': 'Custom AI/ML model development, full-stack web application engineering, and generative AI solutions.',
+          'name': 'AI and Full Stack Development Services'
         })}
       </script>
     </Helmet>
