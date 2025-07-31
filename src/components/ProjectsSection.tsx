@@ -35,7 +35,7 @@ export function ProjectsSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Academic Projects
+              AI/ML Projects & Portfolio
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

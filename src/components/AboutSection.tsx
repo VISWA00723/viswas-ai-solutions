@@ -31,7 +31,7 @@ export function AboutSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-accent bg-clip-text text-transparent">
-              About Me
+              About Viswa V R - AI/ML Developer
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -49,7 +49,7 @@ export function AboutSection() {
               className="space-y-6"
             >
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold">Professional Summary</h3>
+                <h3 className="text-2xl font-bold">Professional AI/ML Developer Summary</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   I am an AI/ML Developer with expertise in machine learning, deep learning, and data-driven solutions. 
                   Currently pursuing my Master's in Computer Applications while working as a Graduate Engineering Trainee 

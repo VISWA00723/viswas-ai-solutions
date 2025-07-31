@@ -39,7 +39,7 @@ export function ExperienceSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-accent bg-clip-text text-transparent">
-              Work Experience
+              Professional AI/ML Experience
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

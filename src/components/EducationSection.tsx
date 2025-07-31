@@ -64,7 +64,7 @@ export function EducationSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-accent bg-clip-text text-transparent">
-              Education & Certifications
+              Education & AI/ML Certifications
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

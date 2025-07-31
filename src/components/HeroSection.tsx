@@ -57,7 +57,7 @@ export function HeroSection() {
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
               >
                 <span className="bg-gradient-primary bg-clip-text text-transparent glow-text animate-text-glow">
-                  Viswa V R
+                  Viswa V R - AI/ML Developer & Full Stack Engineer
                 </span>
               </motion.h1>
               

@@ -89,7 +89,7 @@ export function ContactSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Get In Touch
+              Contact Viswa V R - Hire AI/ML Developer
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -106,11 +106,12 @@ export function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
+              <h3 className="text-2xl font-bold mb-6">Connect with AI/ML Expert</h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                I'm always interested in discussing new opportunities, innovative projects, 
-                and collaborations in the field of AI/ML. Whether you have a project in mind 
-                or just want to connect, feel free to reach out!
+                Hire Viswa V R for your AI/ML projects. I'm always interested in discussing new opportunities, innovative projects, 
+                and collaborations in artificial intelligence and machine learning. Whether you need an <a href="#skills" className="text-primary hover:underline">AI/ML developer</a>, 
+                <a href="#projects" className="text-primary hover:underline">machine learning expert</a>, or <a href="#experience" className="text-primary hover:underline">full-stack engineer</a>, 
+                feel free to reach out!
               </p>
             </div>
 
