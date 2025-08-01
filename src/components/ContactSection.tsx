@@ -82,7 +82,7 @@ export function ContactSection() {
         'service_9wtr0kn', // Your service ID
         'template_contact', // You'll need to create this template in EmailJS
         templateParams,
-        'your_public_key' // You'll need to add your EmailJS public key
+        '81ea_QsS3D00xtwEu' // You'll need to add your EmailJS public key
       );
 
       toast({
