@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import emailjs from '@emailjs/browser';
+import { createClient } from '@supabase/supabase-js';
 
 const contactInfo = [
   {
@@ -70,20 +70,21 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: 'viswavr54@gmail.com'
-      };
-
-      await emailjs.send(
-        'service_9wtr0kn', // Your service ID
-        'template_contact', // You'll need to create this template in EmailJS
-        templateParams,
-        '81ea_QsS3D00xtwEu' // You'll need to add your EmailJS public key
+      const supabase = createClient(
+        'https://your-project.supabase.co',
+        'your-anon-key'
       );
+
+      const { data, error } = await supabase.functions.invoke('send-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        }
+      });
+
+      if (error) throw error;
 
       toast({
         title: "Message Sent Successfully!",
@@ -92,7 +93,7 @@ export function ContactSection() {
       
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      console.error('Email Error:', error);
       toast({
         title: "Failed to Send Message",
         description: "There was an error sending your message. Please try again or contact me directly.",
