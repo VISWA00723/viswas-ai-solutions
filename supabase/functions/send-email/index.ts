@@ -41,20 +41,27 @@ serve(async (req) => {
     console.log('Environment variables loaded');
     
     // Prepare the email data according to EmailJS API requirements
+    const recipientEmail = 'viswavr54@gmail.com';
+    
     const emailData = {
       service_id: serviceId,
       template_id: templateId,
       user_id: userId,
       template_params: {
         to_name: 'Viswa',
-        to_email: 'viswavr54@gmail.com',
+        to_email: recipientEmail,
         from_name: name,
         from_email: email,
         subject: subject,
         message: message,
-        reply_to: email
+        reply_to: email,
+        // Ensure these match your EmailJS template placeholders exactly
+        email: recipientEmail,  // Some templates expect this
+        name: 'Viswa'          // Some templates expect this
       }
     };
+    
+    console.log('Recipient email set to:', recipientEmail);
 
     console.log('Sending email with data:', {
       service_id: serviceId,
