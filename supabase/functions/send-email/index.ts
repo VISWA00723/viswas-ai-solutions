@@ -6,20 +6,32 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  console.log('Edge function called with method:', req.method)
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS request')
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
+    console.log('Processing POST request')
     const { name, email, subject, message } = await req.json()
+    console.log('Request data:', { name, email, subject })
 
     // Get EmailJS credentials from Supabase secrets
     const serviceId = Deno.env.get('EMAILJS_SERVICE_ID')
     const templateId = Deno.env.get('EMAILJS_TEMPLATE_ID')
     const publicKey = Deno.env.get('EMAILJS_PUBLIC_KEY')
 
+    console.log('Checking credentials:', { 
+      hasServiceId: !!serviceId, 
+      hasTemplateId: !!templateId, 
+      hasPublicKey: !!publicKey 
+    })
+
     if (!serviceId || !templateId || !publicKey) {
+      console.error('Missing credentials')
       return new Response(
         JSON.stringify({ error: 'EmailJS credentials not configured' }),
         { 
