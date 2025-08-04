@@ -41,12 +41,15 @@ serve(async (req) => {
       )
     }
 
+    // Prepare template parameters according to EmailJS expected format
     const templateParams = {
+      to_email: 'viswavr54@gmail.com', // Recipient email (must match your EmailJS template)
       from_name: name,
       from_email: email,
       subject: subject,
       message: message,
-      to_email: 'viswavr54@gmail.com'
+      reply_to: email, // Optional but recommended for reply-to header
+      to_name: 'Viswa' // Optional: Name of the recipient
     }
 
     try {
@@ -67,8 +70,21 @@ serve(async (req) => {
         template_id: templateId,
         user_id: publicKey,
         template_params: templateParams,
-        accessToken: publicKey
+        accessToken: publicKey,
+        // Ensure the recipient is properly set
+        to_email: 'viswavr54@gmail.com'
       };
+      
+      // Log the final payload being sent to EmailJS
+      console.log('Sending email with payload:', {
+        ...emailData,
+        user_id: '***',
+        accessToken: '***',
+        template_params: {
+          ...templateParams,
+          message: templateParams.message ? '***' : 'EMPTY'
+        }
+      });
 
       console.log('Sending request to EmailJS...');
       const response = await fetch(emailjsUrl, {
