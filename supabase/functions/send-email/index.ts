@@ -49,37 +49,64 @@ serve(async (req) => {
       to_email: 'viswavr54@gmail.com'
     }
 
-    // Send email using EmailJS API with proper headers
-    const emailjsUrl = `https://api.emailjs.com/api/v1.0/email/send`;
-    
-    const emailData = {
-      service_id: serviceId,
-      template_id: templateId,
-      user_id: publicKey,
-      template_params: templateParams,
-      accessToken: publicKey // Some versions of EmailJS require this
-    };
+    try {
+      console.log('Sending email with data:', {
+        serviceId,
+        templateId,
+        publicKey: publicKey ? '***' : 'MISSING',
+        templateParams: {
+          ...templateParams,
+          message: templateParams.message ? '***' : 'EMPTY'
+        }
+      });
 
-    const response = await fetch(emailjsUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'origin': 'http://localhost', // Required for EmailJS to accept the request
-        'User-Agent': 'supabase-edge-function/1.0' // Some API providers require a user agent
-      },
-      body: JSON.stringify(emailData),
-    });
+      const emailjsUrl = 'https://api.emailjs.com/api/v1.0/email/send';
+      
+      const emailData = {
+        service_id: serviceId,
+        template_id: templateId,
+        user_id: publicKey,
+        template_params: templateParams,
+        accessToken: publicKey
+      };
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('EmailJS Error:', errorText)
+      console.log('Sending request to EmailJS...');
+      const response = await fetch(emailjsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'origin': 'https://viswas-ai-solutions.vercel.app',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      const responseText = await response.text();
+      console.log('EmailJS Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        headers: Object.fromEntries(response.headers.entries()),
+        body: responseText
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}, body: ${responseText}`);
+      }
+
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Error sending email:', error);
       return new Response(
-        JSON.stringify({ error: 'Failed to send email' }),
+        JSON.stringify({ 
+          error: 'Failed to send email',
+          details: error.message,
+          type: error.name
+        }),
         { 
           status: 500, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
-      )
+      );
     }
 
     return new Response(
