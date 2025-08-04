@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 const contactInfo = [
   {
@@ -70,11 +70,6 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      const supabase = createClient(
-        'https://your-project.supabase.co',
-        'your-anon-key'
-      );
-
       const { data, error } = await supabase.functions.invoke('send-email', {
         body: {
           name: formData.name,
