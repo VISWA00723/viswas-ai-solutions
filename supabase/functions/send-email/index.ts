@@ -49,19 +49,26 @@ serve(async (req) => {
       to_email: 'viswavr54@gmail.com'
     }
 
-    // Send email using EmailJS API
-    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    // Send email using EmailJS API with proper headers
+    const emailjsUrl = `https://api.emailjs.com/api/v1.0/email/send`;
+    
+    const emailData = {
+      service_id: serviceId,
+      template_id: templateId,
+      user_id: publicKey,
+      template_params: templateParams,
+      accessToken: publicKey // Some versions of EmailJS require this
+    };
+
+    const response = await fetch(emailjsUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'origin': 'http://localhost', // Required for EmailJS to accept the request
+        'User-Agent': 'supabase-edge-function/1.0' // Some API providers require a user agent
       },
-      body: JSON.stringify({
-        service_id: serviceId,
-        template_id: templateId,
-        user_id: publicKey,
-        template_params: templateParams
-      }),
-    })
+      body: JSON.stringify(emailData),
+    });
 
     if (!response.ok) {
       const errorText = await response.text()
