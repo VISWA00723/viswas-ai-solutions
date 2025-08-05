@@ -63,23 +63,6 @@ serve(async (req) => {
       }
     };
     
-    // 2. Auto-reply to visitor
-    const autoReplyTemplateId = 'YOUR_AUTO_REPLY_TEMPLATE_ID'; // Replace with your auto-reply template ID
-    const autoReplyData = {
-      service_id: serviceId,
-      template_id: autoReplyTemplateId,
-      user_id: userId,
-      template_params: {
-        to_name: name,
-        to_email: visitorEmail,
-        from_name: adminName,
-        from_email: adminEmail,
-        subject: `Thank you for contacting me, ${name}!`,
-        message: `Hi ${name},\n\nThank you for reaching out! I've received your message regarding "${subject}" and will get back to you as soon as possible.\n\nBest regards,\n${adminName}`,
-        reply_to: adminEmail
-      }
-    };
-    
     console.log('Sending emails to:', { adminEmail, visitorEmail });
 
     console.log('Sending admin email with data:', {
@@ -107,24 +90,6 @@ serve(async (req) => {
     
     if (!adminResponse.ok) {
       throw new Error(`Admin email failed: ${adminResponse.status} - ${adminResponseText}`);
-    }
-    
-    // Send auto-reply to visitor
-    const autoReplyResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'origin': 'https://viswas-ai-solutions.vercel.app'
-      },
-      body: JSON.stringify(autoReplyData)
-    });
-    
-    const autoReplyResponseText = await autoReplyResponse.text();
-    console.log('Auto-reply Response Status:', autoReplyResponse.status);
-    
-    if (!autoReplyResponse.ok) {
-      console.error('Auto-reply failed:', autoReplyResponseText);
-      // Don't fail the whole request if auto-reply fails
     }
 
     return new Response(
