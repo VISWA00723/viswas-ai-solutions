@@ -40,53 +40,91 @@ serve(async (req) => {
 
     console.log('Environment variables loaded');
     
-    // Prepare the email data according to EmailJS API requirements
-    const recipientEmail = 'viswavr54@gmail.com';
+    // Main recipient (your email)
+    const adminEmail = 'viswavr54@gmail.com';
+    const visitorEmail = email;
+    const adminName = 'Viswa';
     
-    const emailData = {
+    // 1. Send email to admin (you)
+    const adminEmailData = {
       service_id: serviceId,
-      template_id: templateId,
+      template_id: templateId, // Use your main template ID
       user_id: userId,
       template_params: {
-        to_name: 'Viswa',
-        to_email: recipientEmail,
+        to_name: adminName,
+        to_email: adminEmail,
         from_name: name,
-        from_email: email,
-        subject: subject,
+        from_email: visitorEmail,
+        subject: `New Contact: ${subject}`,
         message: message,
-        reply_to: email,
-        // Ensure these match your EmailJS template placeholders exactly
-        email: recipientEmail,  // Some templates expect this
-        name: 'Viswa'          // Some templates expect this
+        reply_to: visitorEmail,
+        email: visitorEmail,
+        name: name
       }
     };
     
-    console.log('Recipient email set to:', recipientEmail);
+    // 2. Auto-reply to visitor
+    const autoReplyTemplateId = 'YOUR_AUTO_REPLY_TEMPLATE_ID'; // Replace with your auto-reply template ID
+    const autoReplyData = {
+      service_id: serviceId,
+      template_id: autoReplyTemplateId,
+      user_id: userId,
+      template_params: {
+        to_name: name,
+        to_email: visitorEmail,
+        from_name: adminName,
+        from_email: adminEmail,
+        subject: `Thank you for contacting me, ${name}!`,
+        message: `Hi ${name},\n\nThank you for reaching out! I've received your message regarding "${subject}" and will get back to you as soon as possible.\n\nBest regards,\n${adminName}`,
+        reply_to: adminEmail
+      }
+    };
+    
+    console.log('Sending emails to:', { adminEmail, visitorEmail });
 
-    console.log('Sending email with data:', {
+    console.log('Sending admin email with data:', {
       service_id: serviceId,
       template_id: templateId,
       user_id: '***',
       template_params: {
-        ...emailData.template_params,
+        ...adminEmailData.template_params,
         message: message ? '***' : 'EMPTY'
       }
     });
 
-    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    // Send email to admin
+    const adminResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'origin': 'https://viswas-ai-solutions.vercel.app'
       },
-      body: JSON.stringify(emailData)
+      body: JSON.stringify(adminEmailData)
     });
 
-    const responseText = await response.text();
-    console.log('EmailJS Response Status:', response.status);
+    const adminResponseText = await adminResponse.text();
+    console.log('Admin Email Response Status:', adminResponse.status);
     
-    if (!response.ok) {
-      throw new Error(`EmailJS API error: ${response.status} - ${responseText}`);
+    if (!adminResponse.ok) {
+      throw new Error(`Admin email failed: ${adminResponse.status} - ${adminResponseText}`);
+    }
+    
+    // Send auto-reply to visitor
+    const autoReplyResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'origin': 'https://viswas-ai-solutions.vercel.app'
+      },
+      body: JSON.stringify(autoReplyData)
+    });
+    
+    const autoReplyResponseText = await autoReplyResponse.text();
+    console.log('Auto-reply Response Status:', autoReplyResponse.status);
+    
+    if (!autoReplyResponse.ok) {
+      console.error('Auto-reply failed:', autoReplyResponseText);
+      // Don't fail the whole request if auto-reply fails
     }
 
     return new Response(
