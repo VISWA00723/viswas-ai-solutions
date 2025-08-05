@@ -71,14 +71,16 @@ serve(async (req) => {
       user_id: userId,
       template_params: {
         to_name: name,
-        to_email: visitorEmail,
+        to_email: visitorEmail, // This sends TO the visitor
         from_name: adminName,
         from_email: adminEmail,
         subject: `Thank you for contacting me, ${name}!`,
         message: `Hi ${name},\n\nThank you for reaching out! I've received your message regarding "${subject}" and will get back to you as soon as possible.\n\nBest regards,\n${adminName}`,
         reply_to: adminEmail,
-        email: visitorEmail,
-        name: name
+        // Make sure the recipient is the visitor
+        name: name,
+        visitor_email: visitorEmail,
+        visitor_name: name
       }
     };
     
