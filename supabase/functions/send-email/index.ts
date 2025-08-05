@@ -36,6 +36,7 @@ serve(async (req) => {
     // Get EmailJS credentials from environment
     const serviceId = getEnv('EMAILJS_SERVICE_ID');
     const templateId = getEnv('EMAILJS_TEMPLATE_ID');
+    const autoReplyTemplateId = getEnv('EMAILJS_AUTO_REPLY_TEMPLATE_ID');
     const userId = getEnv('EMAILJS_PUBLIC_KEY');
 
     console.log('Environment variables loaded');
@@ -58,6 +59,24 @@ serve(async (req) => {
         subject: `New Contact: ${subject}`,
         message: message,
         reply_to: visitorEmail,
+        email: visitorEmail,
+        name: name
+      }
+    };
+    
+    // 2. Auto-reply to visitor
+    const autoReplyData = {
+      service_id: serviceId,
+      template_id: autoReplyTemplateId,
+      user_id: userId,
+      template_params: {
+        to_name: name,
+        to_email: visitorEmail,
+        from_name: adminName,
+        from_email: adminEmail,
+        subject: `Thank you for contacting me, ${name}!`,
+        message: `Hi ${name},\n\nThank you for reaching out! I've received your message regarding "${subject}" and will get back to you as soon as possible.\n\nBest regards,\n${adminName}`,
+        reply_to: adminEmail,
         email: visitorEmail,
         name: name
       }
@@ -90,6 +109,24 @@ serve(async (req) => {
     
     if (!adminResponse.ok) {
       throw new Error(`Admin email failed: ${adminResponse.status} - ${adminResponseText}`);
+    }
+    
+    // Send auto-reply to visitor
+    const autoReplyResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'origin': 'https://viswas-ai-solutions.vercel.app'
+      },
+      body: JSON.stringify(autoReplyData)
+    });
+    
+    const autoReplyResponseText = await autoReplyResponse.text();
+    console.log('Auto-reply Response Status:', autoReplyResponse.status);
+    
+    if (!autoReplyResponse.ok) {
+      console.error('Auto-reply failed:', autoReplyResponseText);
+      // Don't fail the whole request if auto-reply fails
     }
 
     return new Response(
