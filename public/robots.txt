@@ -34,3 +34,4 @@ Allow: /
 
 # Sitemap locations
 Sitemap: https://viswap.netlify.app/sitemap.xml
+Sitemap: https://viswap.netlify.app/sitemap-dynamic.xml
