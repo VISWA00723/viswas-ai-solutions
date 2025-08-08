@@ -36,6 +36,12 @@ export const handler = async (event, context) => {
         lastmod: new Date().toISOString().split('T')[0]
       },
       { 
+        url: '/viswa-dev', 
+        changefreq: 'weekly', 
+        priority: 0.9,
+        lastmod: new Date().toISOString().split('T')[0]
+      },
+      { 
         url: '/#about', 
         changefreq: 'weekly', 
         priority: 0.8,

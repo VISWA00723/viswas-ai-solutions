@@ -11,7 +11,8 @@ const navigationSections = [
       { label: 'Experience', href: '#experience' },
       { label: 'Projects', href: '#projects' },
       { label: 'Education', href: '#education' },
-      { label: 'Contact', href: '#contact' }
+      { label: 'Contact', href: '#contact' },
+      { label: 'Viswa Dev', href: '/viswa-dev', external: true }
     ]
   },
   {
