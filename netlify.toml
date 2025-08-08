@@ -23,9 +23,10 @@
   status = 200
   force = true
 
+# Removed dynamic redirect for /sitemap.xml to serve static file reliably for Googlebot
+# Access dynamic sitemap at /sitemap-dynamic.xml if needed
 [[redirects]]
-  # Handle sitemap.xml through Netlify function
-  from = "/sitemap.xml"
+  from = "/sitemap-dynamic.xml"
   to = "/.netlify/functions/sitemap"
   status = 200
   force = true
