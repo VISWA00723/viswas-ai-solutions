@@ -118,13 +118,13 @@ export const Chatbot = () => {
 
       {/* Chat Window */}
       <div
-        className={`fixed inset-x-4 bottom-4 md:bottom-6 md:right-6 md:left-auto md:inset-x-auto z-50 transition-all duration-500 ease-out ${
+        className={`fixed inset-0 md:inset-x-4 md:bottom-4 md:right-6 md:left-auto z-50 transition-all duration-500 ease-out ${
           isOpen 
-            ? 'scale-100 opacity-100 translate-y-0' 
-            : 'scale-95 opacity-0 translate-y-8 pointer-events-none'
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8 pointer-events-none'
         }`}
       >
-        <Card className="w-full md:w-[420px] h-[calc(100vh-2rem)] md:h-[600px] max-h-[700px] shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+        <Card className="w-full h-full md:w-[420px] md:h-[600px] md:max-h-[700px] md:rounded-2xl shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
           
           <CardHeader className="relative flex flex-row items-center justify-between p-6 pb-4 border-b border-border/50 bg-background/80 backdrop-blur-sm">
@@ -147,9 +147,9 @@ export const Chatbot = () => {
             </Button>
           </CardHeader>
           
-          <CardContent className="relative flex flex-col h-[calc(100vh-8rem)] md:h-[500px] p-4 md:p-6 pt-4">
+          <CardContent className="relative flex flex-col h-[calc(100vh-9rem)] md:h-[500px] p-4 md:p-6 pt-4">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto mb-6 space-y-4 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-2">
+            <div className="flex-1 overflow-y-auto mb-4 space-y-3 md:space-y-4 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-2">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -162,7 +162,7 @@ export const Chatbot = () => {
                   )}
                   
                    <div
-                     className={`max-w-[280px] md:max-w-[300px] p-3 md:p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
+                     className={`max-w-[85%] md:max-w-[300px] p-3 md:p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
                        message.role === 'user'
                          ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md'
                          : 'bg-muted/50 border border-border/30 rounded-bl-md backdrop-blur-sm'
