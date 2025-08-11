@@ -118,13 +118,13 @@ export const Chatbot = () => {
 
       {/* Chat Window */}
       <div
-        className={`fixed inset-0 md:inset-x-4 md:bottom-4 md:right-6 md:left-auto z-50 transition-all duration-500 ease-out ${
+        className={`fixed inset-0 z-50 transition-all duration-500 ease-out md:inset-x-4 md:bottom-4 md:right-6 md:left-auto ${
           isOpen 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8 pointer-events-none'
         }`}
       >
-        <Card className="w-full h-full md:w-[420px] md:h-[600px] md:max-h-[700px] md:rounded-2xl shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl overflow-hidden">
+        <Card className="flex flex-col w-full h-full md:w-[420px] md:h-[600px] md:max-h-[700px] md:rounded-2xl shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
           
           <CardHeader className="relative flex flex-row items-center justify-between p-6 pb-4 border-b border-border/50 bg-background/80 backdrop-blur-sm">
@@ -147,9 +147,9 @@ export const Chatbot = () => {
             </Button>
           </CardHeader>
           
-          <CardContent className="relative flex flex-col h-[calc(100vh-9rem)] md:h-[500px] p-4 md:p-6 pt-4">
+          <CardContent className="relative flex flex-col h-[calc(100%-80px)] p-3 md:p-4">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto mb-4 space-y-3 md:space-y-4 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-2">
+            <div className="flex-1 overflow-y-auto pb-4 space-y-2 md:space-y-3 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-1">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -162,14 +162,14 @@ export const Chatbot = () => {
                   )}
                   
                    <div
-                     className={`max-w-[85%] md:max-w-[300px] p-3 md:p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
+                     className={`max-w-[90%] md:max-w-[300px] p-3 rounded-xl text-sm leading-relaxed shadow-sm transition-all ${
                        message.role === 'user'
-                         ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md'
-                         : 'bg-muted/50 border border-border/30 rounded-bl-md backdrop-blur-sm'
+                         ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-sm'
+                         : 'bg-muted/50 border border-border/30 rounded-bl-sm backdrop-blur-sm'
                      }`}
                    >
-                    <p className="whitespace-pre-wrap break-words">{message.content}</p>
-                    <span className={`text-xs mt-2 block ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                    <p className="whitespace-pre-wrap break-words text-sm md:text-base">{message.content}</p>
+                    <span className={`text-[10px] mt-1 block opacity-75 ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -200,23 +200,25 @@ export const Chatbot = () => {
             </div>
 
             {/* Input */}
-            <div className="flex gap-3 p-4 bg-muted/30 rounded-2xl border border-border/30 backdrop-blur-sm">
-              <Textarea
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask me about Viswa's skills, experience, or projects..."
-                className="flex-1 min-h-[44px] max-h-[100px] resize-none border-0 bg-transparent focus-visible:ring-1 focus-visible:ring-primary/50 placeholder:text-muted-foreground/60"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isLoading}
-                size="icon"
-                className="h-[44px] w-[44px] flex-shrink-0 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
+            <div className="sticky bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-border/30 p-2">
+              <div className="flex gap-2 items-end">
+                <Textarea
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask me about Viswa..."
+                  className="flex-1 min-h-[48px] max-h-[120px] text-sm md:text-base resize-none border-0 bg-muted/50 focus-visible:ring-1 focus-visible:ring-primary/50 placeholder:text-muted-foreground/60 rounded-xl"
+                  disabled={isLoading}
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!inputMessage.trim() || isLoading}
+                  size="icon"
+                  className="h-12 w-12 flex-shrink-0 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Send className="h-5 w-5" />
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
