@@ -10,6 +10,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import SEO from '@/components/SEO';
+import { Chatbot } from '@/components/Chatbot';
 
 const Index = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const Index = () => {
         <ContactSection />
       </main>
       <Footer />
+      <Chatbot />
     </div>
   );
 };
