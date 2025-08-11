@@ -183,7 +183,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.8, x: 100 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-            className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] order-first lg:order-last"
+            className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] order-first lg:order-last flex items-center justify-center"
           >
             <Scene3D className="w-full h-full" />
           </motion.div>
