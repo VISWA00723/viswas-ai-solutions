@@ -56,43 +56,36 @@ export const Chatbot = () => {
   }, [messages]);
 
   useEffect(() => {
-    let lastScrollPosition = 0;
+    if (typeof window === 'undefined') return;
+    
+    let lastScrollPosition = window.scrollY;
     let ticking = false;
     
     const handleScroll = () => {
+      if (isOpen) return; // Skip if chat is open
+      
       const currentScrollPosition = window.scrollY;
       const scrollDirection = currentScrollPosition > lastScrollPosition ? 'down' : 'up';
       lastScrollPosition = currentScrollPosition;
       
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          // Only show popup when:
-          // 1. Scrolling down
-          // 2. Scrolled more than 300px
-          // 3. Chat is closed
-          // 4. Popup is not already showing
-          if (scrollDirection === 'down' && 
-              currentScrollPosition > 300 && 
-              !isOpen && 
-              !showPopup) {
+      if (scrollDirection === 'down' && currentScrollPosition > 300 && !showPopup) {
+        // Use requestAnimationFrame for smooth performance
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
             setShowPopup(true);
-          }
-          ticking = false;
-        });
-        ticking = true;
+            ticking = false;
+          });
+          ticking = true;
+        }
       }
     };
-
-    // Throttle the scroll event for better performance
-    const throttledScroll = throttle(handleScroll, 200);
     
-    // Add scroll event listener
-    window.addEventListener('scroll', throttledScroll, { passive: true });
+    // Use passive event listener for better scrolling performance
+    const options = { passive: true, capture: true };
+    window.addEventListener('scroll', handleScroll, options);
     
-    // Cleanup
     return () => {
-      window.removeEventListener('scroll', throttledScroll);
-      throttledScroll.cancel?.();
+      window.removeEventListener('scroll', handleScroll, options as EventListenerOptions);
     };
   }, [isOpen, showPopup]);
 
