@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -14,6 +14,28 @@ interface Message {
 
 export const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollTimer = useRef<NodeJS.Timeout>();
+  const { toast } = useToast();
+  
+  // Add styles for animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.3s ease-out forwards;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -23,8 +45,6 @@ export const Chatbot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -33,6 +53,41 @@ export const Chatbot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrolledDown = currentScrollY > lastScrollY; // Scrolling down
+      
+      // Clear any existing timer
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+      
+      // Set a new timer
+      scrollTimer.current = setTimeout(() => {
+        // Show popup if:
+        // 1. User is scrolling down
+        // 2. Scrolled more than 300px
+        // 3. Chat is closed
+        if (scrolledDown && currentScrollY > 300 && !isOpen) {
+          setShowPopup(true);
+        }
+        
+        // Update last scroll position
+        lastScrollY = currentScrollY;
+      }, 1000); // Wait for 1 second after scrolling stops
+    };
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+    };
+  }, [isOpen]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -101,6 +156,40 @@ export const Chatbot = () => {
 
   return (
     <>
+      {/* Popup Message */}
+      {showPopup && !isOpen && (
+        <div className="fixed bottom-6 right-6 z-40 animate-fade-in-up">
+          <div className="bg-primary text-primary-foreground rounded-xl p-4 shadow-xl max-w-xs md:max-w-sm">
+            <div className="flex items-start gap-3">
+              <div className="bg-primary-foreground/20 p-2 rounded-full">
+                <MessageCircle className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-medium">Tired of scrolling?</p>
+                <p className="text-sm opacity-90 mt-1">Ask me anything about Viswa's skills and experience!</p>
+                <Button 
+                  onClick={() => {
+                    setIsOpen(true);
+                    setShowPopup(false);
+                  }}
+                  size="sm" 
+                  variant="secondary" 
+                  className="mt-2 w-full flex items-center gap-1 text-sm"
+                >
+                  Chat Now <ArrowRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
+              <button 
+                onClick={() => setShowPopup(false)}
+                className="text-primary-foreground/70 hover:text-primary-foreground ml-2"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Chat Button */}
       <div
         className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 transition-all duration-500 ease-out ${
@@ -153,7 +242,7 @@ export const Chatbot = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex gap-3 animate-fade-in ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex gap-3 animate-fade-in-up ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
                     <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mt-1 ring-2 ring-primary/10">
