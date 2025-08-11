@@ -118,13 +118,13 @@ export const Chatbot = () => {
 
       {/* Chat Window */}
       <div
-        className={`fixed inset-0 z-50 transition-all duration-500 ease-out md:inset-x-4 md:bottom-4 md:right-6 md:left-auto ${
+        className={`fixed bottom-0 right-0 z-50 transition-all duration-500 ease-out ${
           isOpen 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8 pointer-events-none'
-        }`}
+        } md:bottom-6 md:right-6`}
       >
-        <Card className="flex flex-col w-full h-full md:w-[420px] md:h-[600px] md:max-h-[700px] md:rounded-2xl shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl overflow-hidden">
+        <Card className="flex flex-col w-screen h-[calc(100vh-4rem)] md:w-[420px] md:h-[600px] md:max-h-[700px] md:rounded-2xl shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
           
           <CardHeader className="relative flex flex-row items-center justify-between p-6 pb-4 border-b border-border/50 bg-background/80 backdrop-blur-sm">
