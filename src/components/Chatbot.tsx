@@ -105,60 +105,67 @@ export const Chatbot = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg transition-all duration-300 hover:scale-110"
+          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl hover:shadow-2xl border-2 border-primary/20 transition-all duration-500 hover:scale-110 animate-pulse"
           size="icon"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-7 w-7 text-primary-foreground" />
         </Button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 z-50 w-96 h-[500px] shadow-2xl border-2 bg-background/95 backdrop-blur-sm">
-          <CardHeader className="flex flex-row items-center justify-between p-4 pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Bot className="h-5 w-5 text-primary" />
-              Chat with Viswa's AI
+        <Card className="fixed bottom-6 right-6 z-50 w-[420px] h-[600px] shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl rounded-2xl overflow-hidden animate-scale-in">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+          
+          <CardHeader className="relative flex flex-row items-center justify-between p-6 pb-4 border-b border-border/50 bg-background/80 backdrop-blur-sm">
+            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
+                <Bot className="h-5 w-5 text-primary-foreground" />
+              </div>
+              <div>
+                <div className="text-foreground">Viswa's AI Assistant</div>
+                <div className="text-sm text-muted-foreground font-normal">Always here to help</div>
+              </div>
             </CardTitle>
             <Button
               onClick={() => setIsOpen(false)}
               variant="ghost"
               size="icon"
-              className="h-8 w-8"
+              className="h-10 w-10 rounded-full hover:bg-muted/80 transition-colors"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </Button>
           </CardHeader>
           
-          <CardContent className="flex flex-col h-[420px] p-4 pt-2">
+          <CardContent className="relative flex flex-col h-[500px] p-6 pt-4">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+            <div className="flex-1 overflow-y-auto mb-6 space-y-4 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-2">
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex gap-3 animate-fade-in ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
-                    <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mt-1">
+                    <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mt-1 ring-2 ring-primary/10">
                       <Bot className="h-4 w-4 text-primary" />
                     </div>
                   )}
                   
                   <div
-                    className={`max-w-[280px] p-3 rounded-lg text-sm ${
+                    className={`max-w-[300px] p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
                       message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
+                        ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md'
+                        : 'bg-muted/50 border border-border/30 rounded-bl-md backdrop-blur-sm'
                     }`}
                   >
                     <p className="whitespace-pre-wrap break-words">{message.content}</p>
-                    <span className="text-xs opacity-70 mt-1 block">
+                    <span className={`text-xs mt-2 block ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
                   
                   {message.role === 'user' && (
-                    <div className="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center mt-1">
+                    <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mt-1 ring-2 ring-primary/20">
                       <User className="h-4 w-4 text-primary-foreground" />
                     </div>
                   )}
@@ -166,15 +173,15 @@ export const Chatbot = () => {
               ))}
               
               {isLoading && (
-                <div className="flex gap-2 justify-start">
-                  <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mt-1">
+                <div className="flex gap-3 justify-start animate-fade-in">
+                  <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mt-1 ring-2 ring-primary/10">
                     <Bot className="h-4 w-4 text-primary" />
                   </div>
-                  <div className="bg-muted p-3 rounded-lg text-sm">
+                  <div className="bg-muted/50 border border-border/30 p-4 rounded-2xl rounded-bl-md text-sm backdrop-blur-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -183,20 +190,20 @@ export const Chatbot = () => {
             </div>
 
             {/* Input */}
-            <div className="flex gap-2">
+            <div className="flex gap-3 p-4 bg-muted/30 rounded-2xl border border-border/30 backdrop-blur-sm">
               <Textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask me about Viswa's skills, experience, or projects..."
-                className="flex-1 min-h-[40px] max-h-[80px] resize-none"
+                className="flex-1 min-h-[44px] max-h-[100px] resize-none border-0 bg-transparent focus-visible:ring-1 focus-visible:ring-primary/50 placeholder:text-muted-foreground/60"
                 disabled={isLoading}
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isLoading}
                 size="icon"
-                className="h-[40px] w-[40px] flex-shrink-0"
+                className="h-[44px] w-[44px] flex-shrink-0 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="h-4 w-4" />
               </Button>
