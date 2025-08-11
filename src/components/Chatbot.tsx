@@ -102,19 +102,29 @@ export const Chatbot = () => {
   return (
     <>
       {/* Chat Button */}
-      {!isOpen && (
+      <div
+        className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 transition-all duration-500 ease-out ${
+          isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'
+        }`}
+      >
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl hover:shadow-2xl border-2 border-primary/20 transition-all duration-500 hover:scale-110 animate-pulse"
+          className="h-14 w-14 md:h-16 md:w-16 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl hover:shadow-2xl border-2 border-primary/20 transition-all duration-500 hover:scale-110 animate-pulse"
           size="icon"
         >
-          <MessageCircle className="h-7 w-7 text-primary-foreground" />
+          <MessageCircle className="h-6 w-6 md:h-7 md:w-7 text-primary-foreground" />
         </Button>
-      )}
+      </div>
 
       {/* Chat Window */}
-      {isOpen && (
-        <Card className="fixed bottom-6 right-6 z-50 w-[420px] h-[600px] shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl rounded-2xl overflow-hidden animate-scale-in">
+      <div
+        className={`fixed inset-x-4 bottom-4 md:bottom-6 md:right-6 md:left-auto md:inset-x-auto z-50 transition-all duration-500 ease-out ${
+          isOpen 
+            ? 'scale-100 opacity-100 translate-y-0' 
+            : 'scale-95 opacity-0 translate-y-8 pointer-events-none'
+        }`}
+      >
+        <Card className="w-full md:w-[420px] h-[calc(100vh-2rem)] md:h-[600px] max-h-[700px] shadow-2xl border border-border/50 bg-background/95 backdrop-blur-xl rounded-2xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
           
           <CardHeader className="relative flex flex-row items-center justify-between p-6 pb-4 border-b border-border/50 bg-background/80 backdrop-blur-sm">
@@ -137,7 +147,7 @@ export const Chatbot = () => {
             </Button>
           </CardHeader>
           
-          <CardContent className="relative flex flex-col h-[500px] p-6 pt-4">
+          <CardContent className="relative flex flex-col h-[calc(100vh-8rem)] md:h-[500px] p-4 md:p-6 pt-4">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto mb-6 space-y-4 scrollbar-thin scrollbar-thumb-border/20 scrollbar-track-transparent pr-2">
               {messages.map((message, index) => (
@@ -151,13 +161,13 @@ export const Chatbot = () => {
                     </div>
                   )}
                   
-                  <div
-                    className={`max-w-[300px] p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
-                      message.role === 'user'
-                        ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md'
-                        : 'bg-muted/50 border border-border/30 rounded-bl-md backdrop-blur-sm'
-                    }`}
-                  >
+                   <div
+                     className={`max-w-[280px] md:max-w-[300px] p-3 md:p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all hover:shadow-md ${
+                       message.role === 'user'
+                         ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md'
+                         : 'bg-muted/50 border border-border/30 rounded-bl-md backdrop-blur-sm'
+                     }`}
+                   >
                     <p className="whitespace-pre-wrap break-words">{message.content}</p>
                     <span className={`text-xs mt-2 block ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -210,7 +220,7 @@ export const Chatbot = () => {
             </div>
           </CardContent>
         </Card>
-      )}
+      </div>
     </>
   );
 };
