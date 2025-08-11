@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MessageCircle, X, Send, Bot, User, ArrowRight } from 'lucide-react';
+import { throttle } from 'lodash';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -55,39 +56,45 @@ export const Chatbot = () => {
   }, [messages]);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastScrollPosition = 0;
+    let ticking = false;
     
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrolledDown = currentScrollY > lastScrollY; // Scrolling down
+      const currentScrollPosition = window.scrollY;
+      const scrollDirection = currentScrollPosition > lastScrollPosition ? 'down' : 'up';
+      lastScrollPosition = currentScrollPosition;
       
-      // Clear any existing timer
-      if (scrollTimer.current) clearTimeout(scrollTimer.current);
-      
-      // Set a new timer
-      scrollTimer.current = setTimeout(() => {
-        // Show popup if:
-        // 1. User is scrolling down
-        // 2. Scrolled more than 300px
-        // 3. Chat is closed
-        if (scrolledDown && currentScrollY > 300 && !isOpen) {
-          setShowPopup(true);
-        }
-        
-        // Update last scroll position
-        lastScrollY = currentScrollY;
-      }, 1000); // Wait for 1 second after scrolling stops
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Only show popup when:
+          // 1. Scrolling down
+          // 2. Scrolled more than 300px
+          // 3. Chat is closed
+          // 4. Popup is not already showing
+          if (scrollDirection === 'down' && 
+              currentScrollPosition > 300 && 
+              !isOpen && 
+              !showPopup) {
+            setShowPopup(true);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
+    // Throttle the scroll event for better performance
+    const throttledScroll = throttle(handleScroll, 200);
+    
     // Add scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', throttledScroll, { passive: true });
     
     // Cleanup
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+      window.removeEventListener('scroll', throttledScroll);
+      throttledScroll.cancel?.();
     };
-  }, [isOpen]);
+  }, [isOpen, showPopup]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
