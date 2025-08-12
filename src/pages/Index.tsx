@@ -14,11 +14,35 @@ import { Chatbot } from '@/components/Chatbot';
 
 const Index = () => {
   useEffect(() => {
-    // Smooth scrolling behavior
+    // Enhanced smooth scrolling behavior with offset for fixed navbar
     document.documentElement.style.scrollBehavior = 'smooth';
+    document.documentElement.style.scrollPaddingTop = '80px';
+    
+    // Add smooth scrolling to all anchor links
+    const handleAnchorClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.hash && target.hash.startsWith('#')) {
+        e.preventDefault();
+        const element = document.querySelector(target.hash);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    };
+
+    // Add event listeners to all anchor links
+    document.addEventListener('click', handleAnchorClick);
     
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
+      document.removeEventListener('click', handleAnchorClick);
     };
   }, []);
 
