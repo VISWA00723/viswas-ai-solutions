@@ -58,9 +58,9 @@ serve(async (req) => {
   }
 
   try {
-    const { message, conversationHistory = [], stream = false } = await req.json();
+    const { message, conversationHistory = [] } = await req.json();
 
-    console.log('Received chat request:', { message, historyLength: conversationHistory.length, stream });
+    console.log('Received chat request:', { message, historyLength: conversationHistory.length });
 
     if (!geminiApiKey) {
       console.error('GEMINI_API_KEY not found');
@@ -88,161 +88,54 @@ serve(async (req) => {
 
     console.log('Sending request to Gemini API');
 
-    if (stream) {
-      // For streaming responses
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:streamGenerateContent?key=${geminiApiKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${geminiApiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: messages,
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
         },
-        body: JSON.stringify({
-          contents: messages,
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
           },
-          safetySettings: [
-            {
-              category: "HARM_CATEGORY_HARASSMENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_HATE_SPEECH",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            }
-          ]
-        }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Gemini API error:', response.status, errorText);
-        throw new Error(`Gemini API error: ${response.status} ${errorText}`);
-      }
-
-      // Create a streaming response
-      const encoder = new TextEncoder();
-      const decoder = new TextDecoder();
-      
-      const stream = new ReadableStream({
-        async start(controller) {
-          const reader = response.body?.getReader();
-          
-          if (!reader) {
-            controller.error(new Error('Failed to get response reader'));
-            return;
-          }
-
-          try {
-            while (true) {
-              const { done, value } = await reader.read();
-              
-              if (done) {
-                controller.close();
-                break;
-              }
-
-              const chunk = decoder.decode(value);
-              const lines = chunk.split('\n').filter(line => line.trim());
-              
-              for (const line of lines) {
-                if (line.startsWith('data: ')) {
-                  try {
-                    const jsonData = JSON.parse(line.slice(6));
-                    const text = jsonData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                    
-                    if (text) {
-                      // Send each chunk as a server-sent event
-                      const eventData = JSON.stringify({ text, done: false });
-                      controller.enqueue(encoder.encode(`data: ${eventData}\n\n`));
-                    }
-                  } catch (parseError) {
-                    console.error('Error parsing chunk:', parseError);
-                  }
-                }
-              }
-            }
-            
-            // Send final completion event
-            const finalData = JSON.stringify({ text: '', done: true });
-            controller.enqueue(encoder.encode(`data: ${finalData}\n\n`));
-            
-          } catch (error) {
-            console.error('Stream processing error:', error);
-            controller.error(error);
-          }
-        }
-      });
-
-      return new Response(stream, {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-        },
-      });
-    } else {
-      // Non-streaming response (original behavior)
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${geminiApiKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: messages,
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
           },
-          safetySettings: [
-            {
-              category: "HARM_CATEGORY_HARASSMENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_HATE_SPEECH",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            }
-          ]
-        }),
-      });
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          }
+        ]
+      }),
+    });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Gemini API error:', response.status, errorText);
-        throw new Error(`Gemini API error: ${response.status} ${errorText}`);
-      }
-
-      const data = await response.json();
-      console.log('Gemini API response received');
-
-      const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.';
-
-      return new Response(JSON.stringify({ response: generatedText }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Gemini API error:', response.status, errorText);
+      throw new Error(`Gemini API error: ${response.status} ${errorText}`);
     }
+
+    const data = await response.json();
+    console.log('Gemini API response received');
+
+    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.';
+
+    return new Response(JSON.stringify({ response: generatedText }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error in chat-with-gemini function:', error);
     return new Response(JSON.stringify({ error: error.message }), {

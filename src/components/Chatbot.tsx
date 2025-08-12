@@ -11,7 +11,6 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  isStreaming?: boolean;
 }
 
 export const Chatbot = () => {
@@ -47,7 +46,6 @@ export const Chatbot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [streamingMessageId, setStreamingMessageId] = useState<number | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -104,18 +102,6 @@ export const Chatbot = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Add placeholder streaming message
-    const streamingMessage: Message = {
-      role: 'assistant',
-      content: '',
-      timestamp: new Date(),
-      isStreaming: true
-    };
-
-    setMessages(prev => [...prev, streamingMessage]);
-    const streamingIndex = messages.length + 1; // +1 because we just added user message
-    setStreamingMessageId(streamingIndex);
-
     try {
       // Prepare conversation history for the API
       const conversationHistory = messages.map(msg => ({
@@ -123,99 +109,41 @@ export const Chatbot = () => {
         content: msg.content
       }));
 
-      // Make streaming request using direct fetch
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      const response = await fetch(`${supabaseUrl}/functions/v1/chat-with-gemini`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${anonKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('chat-with-gemini', {
+        body: {
           message: userMessage.content,
-          conversationHistory,
-          stream: true
-        })
+          conversationHistory
+        }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message);
       }
 
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: data.response,
+        timestamp: new Date()
+      };
 
-      if (!reader) {
-        throw new Error('No reader available');
-      }
-
-      let accumulatedText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              
-              if (data.text) {
-                accumulatedText += data.text;
-                
-                // Update the streaming message with accumulated text
-                setMessages(prev => prev.map((msg, index) => {
-                  if (index === streamingIndex) {
-                    return {
-                      ...msg,
-                      content: accumulatedText,
-                      isStreaming: !data.done
-                    };
-                  }
-                  return msg;
-                }));
-              }
-
-              if (data.done) {
-                setStreamingMessageId(null);
-                break;
-              }
-            } catch (parseError) {
-              console.error('Error parsing SSE data:', parseError);
-            }
-          }
-        }
-      }
-
+      setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
-      
-      // Remove the streaming message and add error message
-      setMessages(prev => {
-        const newMessages = [...prev];
-        newMessages.pop(); // Remove streaming message
-        newMessages.push({
-          role: 'assistant',
-          content: "Sorry, I'm having trouble responding right now. Please try again in a moment.",
-          timestamp: new Date()
-        });
-        return newMessages;
-      });
-
       toast({
         title: "Error",
         description: "Failed to get response from the chatbot. Please try again.",
         variant: "destructive",
       });
+      
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: "Sorry, I'm having trouble responding right now. Please try again in a moment.",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
-      setStreamingMessageId(null);
     }
   };
 
@@ -322,19 +250,14 @@ export const Chatbot = () => {
                     </div>
                   )}
                   
-                    <div
+                   <div
                      className={`max-w-[90%] md:max-w-[300px] p-3 rounded-xl text-sm leading-relaxed shadow-sm transition-all ${
                        message.role === 'user'
                          ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-sm'
                          : 'bg-muted/50 border border-border/30 rounded-bl-sm backdrop-blur-sm'
                      }`}
                    >
-                    <p className="whitespace-pre-wrap break-words text-sm md:text-base">
-                      {message.content}
-                      {message.isStreaming && (
-                        <span className="inline-block w-2 h-5 bg-primary/60 ml-1 animate-pulse" />
-                      )}
-                    </p>
+                    <p className="whitespace-pre-wrap break-words text-sm md:text-base">{message.content}</p>
                     <span className={`text-[10px] mt-1 block opacity-75 ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
