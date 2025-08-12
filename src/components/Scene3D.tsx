@@ -337,15 +337,17 @@ export function Scene3D({ className = "" }: Scene3DProps) {
 
   return (
     <motion.div 
-      className={`w-full h-full ${className}`}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.8 }}
+      className={`w-full h-full min-h-[400px] ${className}`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.9 }}
       transition={{ duration: 1.2, ease: "easeOut" }}
+      style={{ minWidth: '100%', minHeight: '100%' }}
     >
       <Suspense fallback={<Fallback />}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 15], fov: 45 }}
+          style={{ width: '100%', height: '100%' }}
           gl={{ 
             antialias: true,
             alpha: true,

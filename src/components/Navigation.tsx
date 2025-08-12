@@ -92,12 +92,15 @@ export function Navigation() {
             >
               <ThemeToggle />
               <Button
+                asChild
                 variant="outline"
                 size="sm"
                 className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-glow transition-all duration-300 magnetic-hover"
               >
-                <Download className="w-4 h-4 mr-2" />
-                Resume
+                <a href="/DOC-20250524-WA0000_.pdf" download>
+                  <Download className="w-4 h-4 mr-2" />
+                  Resume
+                </a>
               </Button>
             </motion.div>
 
@@ -150,12 +153,15 @@ export function Navigation() {
                 className="px-4 py-3"
               >
                 <Button
+                  asChild
                   variant="outline"
                   size="sm"
                   className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full hover:shadow-glow transition-all duration-300"
                 >
-                  <Download className="w-4 h-4 mr-2" />
-                  Resume
+                  <a href="/DOC-20250524-WA0000_.pdf" download>
+                    <Download className="w-4 h-4 mr-2" />
+                    Resume
+                  </a>
                 </Button>
               </motion.div>
             </div>
