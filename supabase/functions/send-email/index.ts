@@ -41,11 +41,13 @@ serve(async (req) => {
 
     console.log('Environment variables loaded');
     
+    const originHeader = req.headers.get('origin') || 'https://viswap.netlify.app';
+    console.log('Using origin header for EmailJS:', originHeader);
+    
     // Main recipient (your email)
     const adminEmail = 'viswavr54@gmail.com';
     const visitorEmail = email;
     const adminName = 'Viswa';
-    
     // 1. Send email to admin (you)
     const adminEmailData = {
       service_id: serviceId,
@@ -101,7 +103,7 @@ serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'origin': 'https://viswas-ai-solutions.vercel.app'
+        'origin': originHeader
       },
       body: JSON.stringify(adminEmailData)
     });
@@ -118,7 +120,7 @@ serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'origin': 'https://viswas-ai-solutions.vercel.app'
+        'origin': originHeader
       },
       body: JSON.stringify(autoReplyData)
     });

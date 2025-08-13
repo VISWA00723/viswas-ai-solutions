@@ -121,13 +121,36 @@ export const Chatbot = () => {
         throw new Error(error.message);
       }
 
+      const fullText: string = data.response || '';
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.response,
+        content: '',
         timestamp: new Date()
       };
 
+      // Add empty assistant message, then type it out in real-time
       setMessages(prev => [...prev, assistantMessage]);
+
+      let index = 0;
+      const typingSpeed = 20; // ms per character
+      const intervalId = setInterval(() => {
+        index++;
+        setMessages(prev => {
+          const newMessages = [...prev];
+          const lastIndex = newMessages.length - 1;
+          if (lastIndex >= 0 && newMessages[lastIndex].role === 'assistant') {
+            newMessages[lastIndex] = {
+              ...newMessages[lastIndex],
+              content: fullText.slice(0, index),
+            };
+          }
+          return newMessages;
+        });
+
+        if (index >= fullText.length) {
+          clearInterval(intervalId);
+        }
+      }, typingSpeed);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
